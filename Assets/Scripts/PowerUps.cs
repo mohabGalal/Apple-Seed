@@ -10,6 +10,11 @@ public class PowerUps : MonoBehaviour
     public Transform StartingPoint;
     public Transform EndingPoint;
 
+    Vector3 newPos = Vector3.zero;
+    float MinDistance = 6f;
+    
+
+
 
     void Start()
     {
@@ -32,8 +37,14 @@ public class PowerUps : MonoBehaviour
     }
 
     private void Randomize()
-    {      
+    {
+        float RandX = Random.Range(StartingPoint.position.x, EndingPoint.position.x);
+        float RandY = Random.Range(StartingPoint.position.y, EndingPoint.position.y);
+        newPos.x = RandX;
+        newPos.y = RandY;
+        
+
         int index = Random.Range(0, powerUpPrefab.Count);
-        GameObject CurrentPowerUp = Instantiate(powerUpPrefab[index], PowerUpSpawner.position, Quaternion.identity); 
+        GameObject CurrentPowerUp = Instantiate(powerUpPrefab[index], newPos, Quaternion.identity); 
     }
 }

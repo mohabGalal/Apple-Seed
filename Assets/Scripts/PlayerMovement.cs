@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         extraJumps = extraJumpsValue; 
@@ -84,10 +84,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        isFacingRight = !isFacingRight;
+       isFacingRight = !isFacingRight;
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+        
+       // transform.rotation = Quaternion.Euler(0,isFacingRight ? 180 : 0,0);
+      
 
     }
 }
