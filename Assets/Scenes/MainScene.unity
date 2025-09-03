@@ -413,6 +413,7 @@ MonoBehaviour:
   PowerUpSpawner: {fileID: 0}
   StartingPoint: {fileID: 2007688840}
   EndingPoint: {fileID: 770699625}
+  numberOfPowerUps: 5
 --- !u!4 &492523868
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +619,7 @@ Transform:
   m_GameObject: {fileID: 770699624}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.96, y: -3.89, z: -0.41370973}
+  m_LocalPosition: {x: 32.96, y: -3.86, z: -0.41370973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1085,7 +1086,7 @@ Transform:
   m_GameObject: {fileID: 1224145676}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0077080727, y: 0.47222245, z: -10}
+  m_LocalPosition: {x: -0.0065522194, y: 0.47220242, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

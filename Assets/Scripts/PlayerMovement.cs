@@ -9,9 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask GroundLayer;
     public Transform GroundCheck;
     private float GroundRadius = 0.2f;
-
-    public int extraJumpsValue = 1; 
-    private int extraJumps;        
+    private int heartsCollected = 0;
+    private bool canDoubleJump = true;
 
 
     private Rigidbody2D rb;
@@ -19,17 +18,16 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        extraJumps = extraJumpsValue; 
 
     }
-  
+
     void Update()
     {
         isGrounded = IsGrounded();
 
         if (isGrounded)
         {
-            extraJumps = extraJumpsValue;
+            canDoubleJump = true;
         }
         HandleMovementInput();
     }
@@ -48,22 +46,22 @@ public class PlayerMovement : MonoBehaviour
                 DoubleJump();
         }
 
-            if (isFacingRight && InputX < 0)
-            {
-                Flip();
-            }
-            else if (!isFacingRight && InputX > 0)
-            {
-                Flip();
-            }
+        if (isFacingRight && InputX < 0)
+        {
+            Flip();
+        }
+        else if (!isFacingRight && InputX > 0)
+        {
+            Flip();
+        }
 
-        
+
     }
 
     private bool IsGrounded()
     {
-       isGrounded =  Physics2D.OverlapCircle(GroundCheck.position, GroundRadius, GroundLayer);
-       return isGrounded;
+        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, GroundRadius, GroundLayer);
+        return isGrounded;
     }
     private void Jump()
     {
@@ -74,23 +72,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoubleJump()
     {
-        if (extraJumps > 0)
+        if (heartsCollected > 0 && canDoubleJump)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
-            --extraJumps;
+            heartsCollected--;
+            canDoubleJump = false;
         }
 
     }
 
     private void Flip()
     {
-       isFacingRight = !isFacingRight;
+        isFacingRight = !isFacingRight;
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
-        
-       // transform.rotation = Quaternion.Euler(0,isFacingRight ? 180 : 0,0);
-      
 
+        // transform.rotation = Quaternion.Euler(0,isFacingRight ? 180 : 0,0);
+    }
+
+    public void AddHeart(int amount)
+    {
+        heartsCollected += amount;
     }
 }
