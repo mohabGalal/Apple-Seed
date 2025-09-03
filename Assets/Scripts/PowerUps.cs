@@ -51,7 +51,7 @@ public class PowerUps : MonoBehaviour
 
 
             float RandX = Random.Range(StartingPoint.position.x, EndingPoint.position.x);
-            float RandY = Random.Range(StartingPoint.position.y, EndingPoint.position.y);
+            float RandY = StartingPoint.position.y;
 
             Vector3 newPos = new Vector3(RandX, RandY, 0f);
 
