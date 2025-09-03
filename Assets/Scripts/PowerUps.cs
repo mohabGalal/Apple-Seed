@@ -41,9 +41,35 @@ public class PowerUps : MonoBehaviour
 
     private void SpawnPowerUps()
     {
+        // build  prefab index  list
+
+        List<int> prefabIndexes = new List<int>();
+        int baseCount = numberOfPowerUps / powerUpPrefab.Count;
+        int remainder = numberOfPowerUps % powerUpPrefab.Count;
+
+        for (int i = 0; i < powerUpPrefab.Count; i++)
+        {
+            int count = baseCount + (i < remainder ? 1 : 0);
+            for (int j = 0; j < count; j++)
+            {
+                prefabIndexes.Add(i);
+            }
+        }
+
+        // shuffle the list 
+        for (int i = 0; i < prefabIndexes.Count; i++)
+        {
+            int rand = Random.Range(i, prefabIndexes.Count);
+            int temp = prefabIndexes[i];
+            prefabIndexes[i] = prefabIndexes[rand];
+            prefabIndexes[rand] = temp;
+        }
+
+        //spawn with spacing check
 
         int attempts = 0;
         int maxAttempts = numberOfPowerUps * 10;
+        int indexCounter = 0;
 
         while (spawnedPositions.Count < numberOfPowerUps && attempts < maxAttempts)
         {
@@ -72,9 +98,8 @@ public class PowerUps : MonoBehaviour
                 spawnedPositions.Add(newPos);
 
                 // pick a random prefab
-
-                int idx = Random.Range(0, powerUpPrefab.Count);
-                Instantiate(powerUpPrefab[idx], newPos, Quaternion.identity);
+                int prefabIndex = prefabIndexes[indexCounter++];
+                Instantiate(powerUpPrefab[prefabIndex], newPos, Quaternion.identity);
             }
 
         }
