@@ -4,6 +4,7 @@ public abstract class BaseEnemy : MonoBehaviour
 {
     public float health = 100f;
     public float speed = 2f;
+    public int DirectionX = 1;
 
     protected Rigidbody2D rb;
     protected Transform player;

@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private float GroundRadius = 0.2f;
     private int heartsCollected = 0;
     private bool canDoubleJump = true;
+    public Animator anim;
+    bool isMoving;
 
 
     private Rigidbody2D rb;
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        AnimationController();
         isGrounded = IsGrounded();
 
         if (isGrounded)
@@ -32,11 +35,22 @@ public class PlayerMovement : MonoBehaviour
         HandleMovementInput();
     }
 
+    private void AnimationController()
+    {
+        anim.SetBool("isMoving", isMoving);
+        anim.SetFloat("Yvelocity", rb.linearVelocityY);
+
+
+    }
+
     private void HandleMovementInput()
     {
         float InputX = Input.GetAxisRaw("Horizontal");
         // rb.linearVelocityX = InputX * RunningSpeed;
         rb.linearVelocity = new Vector2(InputX * RunningSpeed, rb.linearVelocity.y);
+
+        isMoving = InputX != 0;
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -44,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             else
                 DoubleJump();
+
+        
+            anim.SetTrigger("isJumping");
         }
 
         if (isFacingRight && InputX < 0)
@@ -94,5 +111,11 @@ public class PlayerMovement : MonoBehaviour
     public void AddHeart(int amount)
     {
         heartsCollected += amount;
+    }
+
+    public void Die()
+    {
+       // Destroy(gameObject);
+        Debug.Log("Player Dies");
     }
 }
