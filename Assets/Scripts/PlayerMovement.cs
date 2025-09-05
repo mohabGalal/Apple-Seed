@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ public class PlayerMovement : MonoBehaviour
     private bool canDoubleJump = true;
     public Animator anim;
     bool isMoving;
+    public bool CanThrowRock;
+   // public Transform handPoint;      
+    public GameObject rockPrefab;    
+    public float throwForce = 10f;
+    public Transform handPointt;
 
 
     private Rigidbody2D rb;
@@ -34,6 +40,13 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = true;
         }
         HandleMovementInput();
+
+        if( (Input.GetKeyDown(KeyCode.T)) && CanThrowRock)
+        {
+            throwRock();
+        }
+
+        Debug.Log($"can throw : {CanThrowRock}");
     }
 
     private void AnimationController()
@@ -114,6 +127,29 @@ public class PlayerMovement : MonoBehaviour
         heartsCollected += amount;
     }
 
+    public void throwRock()
+    {
+        anim.SetTrigger("Throw");
+        CanThrowRock = false;
+        GameObject rock = Instantiate(rockPrefab, handPointt.position, Quaternion.identity);
+        Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
+
+        if(rock != null)
+        {
+            Debug.Log($"Rock Position : { rock.gameObject.transform.position}");
+        }
+
+        // Determine throw direction 
+        Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+
+        rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
+        Debug.Log("Inside the throw function ");
+
+    }
+    public void canThrowRock()
+    {
+        CanThrowRock = true;
+    }
     public void Die()
     {
        // Destroy(gameObject);
