@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -14,7 +15,13 @@ public class PlayerMovement : MonoBehaviour
     private bool canDoubleJump = true;
     public Animator anim;
     bool isMoving;
+    public bool CanThrowRock;
+   // public Transform handPoint;      
+    public GameObject rockPrefab;    
+    public float throwForce = 10f;
+    public Transform handPointt;
 
+    public bool LiquidPicked;
 
     private Rigidbody2D rb;
 
@@ -34,12 +41,19 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = true;
         }
         HandleMovementInput();
+
+        if( (Input.GetKeyDown(KeyCode.T)) && CanThrowRock)
+        {
+            throwRock();
+        }
+
+        Debug.Log($"can throw : {CanThrowRock}");
     }
 
     private void AnimationController()
     {
         anim.SetBool("isMoving", isMoving);
-        anim.SetFloat("Yvelocity", rb.linearVelocityY);
+        
 
 
     }
@@ -53,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = InputX != 0;
         
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !LiquidPicked)
         {
             if (isGrounded)
                 Jump();
@@ -64,7 +78,13 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("isJumping");
         }
 
-        if (isFacingRight && InputX < 0)
+        if (Input.GetKeyDown(KeyCode.Space) && LiquidPicked)
+        {
+            SpinJump();
+            LiquidPicked = false;
+        }
+
+            if (isFacingRight && InputX < 0)
         {
             Flip();
         }
@@ -84,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         // rb.linearVelocityY = JumpVelocity;
+        anim.SetFloat("Yvelocity", rb.linearVelocityY);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
         isGrounded = false;
     }
@@ -92,11 +113,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (heartsCollected > 0 && canDoubleJump)
         {
+            anim.SetFloat("Yvelocity", rb.linearVelocityY);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
             heartsCollected--;
             canDoubleJump = false;
         }
 
+    }
+
+    private void SpinJump()
+    {
+        anim.SetTrigger("SpinJump");
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity* 1.6f);
+        isGrounded = false;
     }
 
     private void Flip()
@@ -114,6 +143,26 @@ public class PlayerMovement : MonoBehaviour
         heartsCollected += amount;
     }
 
+    public void throwRock()
+    {
+        anim.SetTrigger("Throw");
+        CanThrowRock = false;
+
+        // Calculate spawn position relative to player
+        Vector3 spawnPosition = transform.position;
+        float handOffset = isFacingRight ? 1f : -1f; 
+        spawnPosition.x += handOffset;
+        spawnPosition.y += 0.5f; 
+
+        GameObject rock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
+        Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
+        rockRb.AddForce(direction * throwForce, ForceMode2D.Impulse);
+    }
+    public void canThrowRock()
+    {
+        CanThrowRock = true;
+    }
     public void Die()
     {
        // Destroy(gameObject);

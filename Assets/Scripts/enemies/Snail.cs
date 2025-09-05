@@ -21,6 +21,11 @@ public class Snail : BaseEnemy
             DirectionX = - DirectionX;
             flip();
         }
+
+        if (collision.collider.CompareTag("Rock"))
+        {
+            Die();
+        }
     }
 
     
