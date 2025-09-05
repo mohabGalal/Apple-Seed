@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float throwForce = 10f;
     public Transform handPointt;
 
+    public bool LiquidPicked;
 
     private Rigidbody2D rb;
 
@@ -52,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void AnimationController()
     {
         anim.SetBool("isMoving", isMoving);
-        anim.SetFloat("Yvelocity", rb.linearVelocityY);
+        
 
 
     }
@@ -66,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = InputX != 0;
         
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !LiquidPicked)
         {
             if (isGrounded)
                 Jump();
@@ -77,7 +78,13 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("isJumping");
         }
 
-        if (isFacingRight && InputX < 0)
+        if (Input.GetKeyDown(KeyCode.Space) && LiquidPicked)
+        {
+            SpinJump();
+            LiquidPicked = false;
+        }
+
+            if (isFacingRight && InputX < 0)
         {
             Flip();
         }
@@ -97,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         // rb.linearVelocityY = JumpVelocity;
+        anim.SetFloat("Yvelocity", rb.linearVelocityY);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
         isGrounded = false;
     }
@@ -105,11 +113,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (heartsCollected > 0 && canDoubleJump)
         {
+            anim.SetFloat("Yvelocity", rb.linearVelocityY);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
             heartsCollected--;
             canDoubleJump = false;
         }
 
+    }
+
+    private void SpinJump()
+    {
+        anim.SetTrigger("SpinJump");
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity* 1.6f);
+        isGrounded = false;
     }
 
     private void Flip()
