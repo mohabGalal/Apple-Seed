@@ -1,7 +1,7 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class Rabbit : BaseEnemy
+public class Snail : BaseEnemy
 {
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -11,6 +11,7 @@ public class Rabbit : BaseEnemy
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
             if (Player != null) {
                 Player.Die();
+               // Die();
             
             }
         }
@@ -18,6 +19,7 @@ public class Rabbit : BaseEnemy
         if (collision.collider.CompareTag("StartPoint") || collision.collider.CompareTag("EndPoint"))
         {
             DirectionX = - DirectionX;
+            flip();
         }
     }
 

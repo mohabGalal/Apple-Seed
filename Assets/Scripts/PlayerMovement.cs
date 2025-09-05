@@ -1,3 +1,4 @@
+using UnityEditor.UI;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -117,5 +118,7 @@ public class PlayerMovement : MonoBehaviour
     {
        // Destroy(gameObject);
         Debug.Log("Player Dies");
+        anim.SetBool("isDead", true);
+       
     }
 }
