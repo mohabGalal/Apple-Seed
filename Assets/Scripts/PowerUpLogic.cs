@@ -10,10 +10,6 @@ public class PowerUpLogic : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.CompareTag("Ground"))
-        {
-
-        }
     }
 
     
