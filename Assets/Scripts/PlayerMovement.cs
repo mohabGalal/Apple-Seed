@@ -131,20 +131,17 @@ public class PlayerMovement : MonoBehaviour
     {
         anim.SetTrigger("Throw");
         CanThrowRock = false;
-        GameObject rock = Instantiate(rockPrefab, handPointt.position, Quaternion.identity);
-        Rigidbody2D rb = rock.GetComponent<Rigidbody2D>();
 
-        if(rock != null)
-        {
-            Debug.Log($"Rock Position : { rock.gameObject.transform.position}");
-        }
+        // Calculate spawn position relative to player
+        Vector3 spawnPosition = transform.position;
+        float handOffset = isFacingRight ? 1f : -1f; 
+        spawnPosition.x += handOffset;
+        spawnPosition.y += 0.5f; 
 
-        // Determine throw direction 
-        Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-
-        rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
-        Debug.Log("Inside the throw function ");
-
+        GameObject rock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
+        Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
+        rockRb.AddForce(direction * throwForce, ForceMode2D.Impulse);
     }
     public void canThrowRock()
     {

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StartPoint
   - EndPoint
+  - Rock
   layers:
   - Default
   - TransparentFX
