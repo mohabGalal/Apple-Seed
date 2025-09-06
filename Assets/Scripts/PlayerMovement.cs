@@ -1,4 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask GroundLayer;
     public Transform GroundCheck;
     private float GroundRadius = 0.2f;
-    private int heartsCollected = 0;
-    private bool canDoubleJump = true;
+    //private int heartsCollected = 0;
+    public bool canDoubleJump = true;
     public Animator anim;
     bool isMoving;
     public bool CanThrowRock;
@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject rockPrefab;    
     public float throwForce = 10f;
     public Transform handPointt;
+    public bool doubleJumpUnlocked = false;
 
     public bool LiquidPicked;
 
@@ -52,9 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            canDoubleJump = true;
-            
-
+            canDoubleJump = doubleJumpUnlocked;
             // End spin when touching the ground
             if (isSpinning)
                 EndSpin();
@@ -97,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
                 Jump();
-            else
+           else
                 DoubleJump();
 
         
@@ -134,11 +133,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoubleJump()
     {
-        if (heartsCollected > 0 && canDoubleJump)
+        /* if (heartsCollected > 0 && canDoubleJump)
+         {
+             anim.SetFloat("Yvelocity", rb.linearVelocityY);
+             rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
+             heartsCollected--;
+             canDoubleJump = false;
+         }*/
+        if (canDoubleJump)
         {
             anim.SetFloat("Yvelocity", rb.linearVelocityY);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
-            heartsCollected--;
             canDoubleJump = false;
         }
 
@@ -161,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     private void EndSpin()
     {
         isSpinning = false;
-        hasSpinPower = false;
+        //hasSpinPower = false;
         anim.SetBool("isSpinning", false);
         rb.gravityScale = defaultGravityScale;
     }
@@ -185,10 +190,10 @@ public class PlayerMovement : MonoBehaviour
         // transform.rotation = Quaternion.Euler(0,isFacingRight ? 180 : 0,0);
     }
 
-    public void AddHeart(int amount)
+  /*  public void AddHeart(int amount)
     {
         heartsCollected += amount;
-    }
+    }*/
 
     public void throwRock()
     {
@@ -209,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
     public void canThrowRock()
     {
         CanThrowRock = true;
+        handlePowerUps("Throw");
     }
     public void Die()
     {
@@ -218,6 +224,36 @@ public class PlayerMovement : MonoBehaviour
        
     }
 
+    public void handlePowerUps(string powerUpName)
+    {
+        switch (powerUpName)
+        {
+            case "DoubleJump":
+                {
+                    CanThrowRock = false;
+                    hasSpinPower = false;
+                    CanPickRock = false;
+                    break;
+                }
+            case "Throw":
+                {
+                    canDoubleJump = false;
+                    hasSpinPower = false;
+                    doubleJumpUnlocked = false;
+                    break;
+
+                }
+            case "SpinJump":
+                {
+                    CanThrowRock = false;
+                    canDoubleJump = false;
+                    CanPickRock = false;
+                    doubleJumpUnlocked = false;
+                    break;
+                }
+        }
+
+    }
 
 
 }
