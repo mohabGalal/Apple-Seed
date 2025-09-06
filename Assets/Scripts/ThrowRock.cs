@@ -1,25 +1,18 @@
 using UnityEngine;
 
-public class Rock : MonoBehaviour
+public class ThrowRock : MonoBehaviour
 {
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
+            
             if (Player != null)
             {
-                if (Player.CanPickRock)
-                {
-                    Player.CanThrowRock = true;
-                    Debug.Log("Setting the CanThrow value");
-                    Destroy(gameObject);
-                }
+                Player.CanPickRock = true;
+                Destroy(gameObject);
             }
-
-            
         }
     }
 }
