@@ -9,10 +9,20 @@ public class Snail : BaseEnemy
         if (collision.collider.CompareTag("Player"))
         {
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
+           
             if (Player != null) {
-                Player.Die();
-               // Die();
-            
+                
+                if (Player.IsSpinning())
+                {
+                   // Enemy dies
+                  //  Destroy(gameObject);
+                    Player.Bounce(); 
+                }
+                else
+                {
+                   // Player.Die(); 
+                }
+
             }
         }
 

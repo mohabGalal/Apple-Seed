@@ -10,6 +10,7 @@ public class SpinJump : MonoBehaviour
             if (Player != null)
             {
                 Player.LiquidPicked = true;
+                Player.hasSpinPower = true;
             }
         }
     }

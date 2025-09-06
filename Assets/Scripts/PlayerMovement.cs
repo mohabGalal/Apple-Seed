@@ -25,10 +25,23 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    [SerializeField] public bool hasSpinPower = false; 
+    [SerializeField] private float spinDelay = 0.8f;    // small delay after jump before spin can start
+    [SerializeField] private float spinBounceVelocity = 14f;
+    [SerializeField] private float spinGravityScale = 1.2f; 
+    private float defaultGravityScale;
+
+    private bool isSpinning = false;
+    private float jumpStartTime = -999f;
+
+    public bool IsSpinning() => isSpinning;
+    public bool IsFalling() => rb.linearVelocity.y < -0.05f;
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        defaultGravityScale = rb.gravityScale;
     }
 
     void Update()
@@ -39,23 +52,35 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             canDoubleJump = true;
+            
+
+            // End spin when touching the ground
+            if (isSpinning)
+                EndSpin();
         }
+
         HandleMovementInput();
 
-        if( (Input.GetKeyDown(KeyCode.T)) && CanThrowRock)
+        if ((Input.GetKeyDown(KeyCode.T)) && CanThrowRock)
         {
             throwRock();
+        }
+
+        
+        if (!isGrounded && hasSpinPower && Input.GetKey(KeyCode.Space) && !isSpinning)
+        {
+            if (Time.time - jumpStartTime >= spinDelay)
+                StartSpin();
         }
 
         Debug.Log($"can throw : {CanThrowRock}");
     }
 
+
     private void AnimationController()
     {
         anim.SetBool("isMoving", isMoving);
         
-
-
     }
 
     private void HandleMovementInput()
@@ -67,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = InputX != 0;
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && !LiquidPicked)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
                 Jump();
@@ -78,11 +103,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("isJumping");
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && LiquidPicked)
-        {
-            SpinJump();
-            LiquidPicked = false;
-        }
+
 
             if (isFacingRight && InputX < 0)
         {
@@ -103,11 +124,12 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        // rb.linearVelocityY = JumpVelocity;
         anim.SetFloat("Yvelocity", rb.linearVelocityY);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
         isGrounded = false;
+        jumpStartTime = Time.time;   // mark jump start
     }
+
 
     private void DoubleJump()
     {
@@ -124,8 +146,32 @@ public class PlayerMovement : MonoBehaviour
     private void SpinJump()
     {
         anim.SetTrigger("SpinJump");
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity* 1.6f);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity* 1.3f);
         isGrounded = false;
+    }
+
+    private void StartSpin()
+    {
+        isSpinning = true;
+        anim.SetBool("isSpinning", true);  
+        rb.gravityScale = spinGravityScale;
+    }
+
+    private void EndSpin()
+    {
+        isSpinning = false;
+        hasSpinPower = false;
+        anim.SetBool("isSpinning", false);
+        rb.gravityScale = defaultGravityScale;
+    }
+
+    
+    public void Bounce()
+    {
+        if (!isSpinning && hasSpinPower && Input.GetKey(KeyCode.Space))
+            StartSpin();
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, spinBounceVelocity);
     }
 
     private void Flip()
@@ -170,4 +216,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isDead", true);
        
     }
+
+
+
 }
