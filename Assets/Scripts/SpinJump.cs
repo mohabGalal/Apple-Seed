@@ -11,6 +11,7 @@ public class SpinJump : MonoBehaviour
             {
                 Player.LiquidPicked = true;
                 Player.hasSpinPower = true;
+                Player.handlePowerUps("SpinJump");
             }
         }
     }

@@ -11,6 +11,7 @@ public class ThrowRock : MonoBehaviour
             if (Player != null)
             {
                 Player.CanPickRock = true;
+                Player.handlePowerUps("Throw");
                 Destroy(gameObject);
             }
         }
