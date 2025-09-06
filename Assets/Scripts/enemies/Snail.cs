@@ -14,7 +14,7 @@ public class Snail : BaseEnemy
                 
                 if (Player.IsSpinning())
                 {
-                    Die();
+                    //Die();
                    // Enemy dies
                   //  Destroy(gameObject);
                     Player.Bounce(); 
