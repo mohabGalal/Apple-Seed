@@ -784,7 +784,34 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      boss_bunny_0: -1018325308030335200
+      boss_bunny_1: -3137526215103856036
+      boss_bunny_10: -6601693714540893103
+      boss_bunny_11: 3170568610867279375
+      boss_bunny_12: -2946431809455503230
+      boss_bunny_13: 369323457418038668
+      boss_bunny_14: -2463657873206474701
+      boss_bunny_15: 5846038230312547022
+      boss_bunny_16: -2144414641577047580
+      boss_bunny_17: 5258243848996226203
+      boss_bunny_18: 4694174470779317348
+      boss_bunny_19: -3894568943917516154
+      boss_bunny_2: 7811824627537019
+      boss_bunny_20: -6671478034776193655
+      boss_bunny_21: -8170197413972724908
+      boss_bunny_22: 8006812623890245519
+      boss_bunny_23: 1146365367262282740
+      boss_bunny_24: -906804614897812547
+      boss_bunny_25: 7526862942134952234
+      boss_bunny_26: 5900568539711489672
+      boss_bunny_3: -8096277698436545499
+      boss_bunny_4: 3663912525883897267
+      boss_bunny_5: 8356527125965252695
+      boss_bunny_6: -130908577724055668
+      boss_bunny_7: 2851477950988136915
+      boss_bunny_8: 8244569638132941233
+      boss_bunny_9: 6404287700610627490
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

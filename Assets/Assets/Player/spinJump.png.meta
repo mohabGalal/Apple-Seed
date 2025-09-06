@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      spinJump_0: -3859849414746627687
+      spinJump_1: 5519212956920779365
+      spinJump_2: 9031716179545388385
+      spinJump_3: -4968150857576811456
+      spinJump_4: 8399418349051886270
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -259,7 +259,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      frog_sheet_0: -7157790738460742873
+      frog_sheet_1: 3534585715912209096
+      frog_sheet_2: 5458533048653953016
+      frog_sheet_3: -6732673342101452225
+      frog_sheet_4: -1116275721049281722
+      frog_sheet_5: 8876843460273544687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
