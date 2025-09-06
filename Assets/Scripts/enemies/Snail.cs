@@ -21,7 +21,7 @@ public class Snail : BaseEnemy
                 }
                 else
                 {
-                   // Player.Die(); 
+                    Player.Die(); 
                 }
 
             }

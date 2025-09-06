@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
     bool isMoving;
     public bool CanThrowRock;
+    public bool CanPickRock;
    // public Transform handPoint;      
     public GameObject rockPrefab;    
     public float throwForce = 10f;
