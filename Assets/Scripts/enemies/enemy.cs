@@ -38,7 +38,8 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         Destroy(gameObject);
         GameObject Explosion = Instantiate(ExplosionPreFab, transform.position, Quaternion.identity);
-       // Destroy(Explosion);
+
+        Destroy(Explosion, 0.6f);
 
     }
 }

@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] public bool hasSpinPower = false; 
     [SerializeField] private float spinDelay = 0.8f;    // small delay after jump before spin can start
-    [SerializeField] private float spinBounceVelocity = 14f;
+    [SerializeField] private float spinBounceVelocity = 10f;
     [SerializeField] private float spinGravityScale = 1.2f; 
     private float defaultGravityScale;
 
