@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float RunningSpeed = 8f;
-    private float JumpVelocity = 12f;
+    private float JumpVelocity = 10f;
     private bool isFacingRight = true;
     private bool isGrounded = true;
     public LayerMask GroundLayer;
