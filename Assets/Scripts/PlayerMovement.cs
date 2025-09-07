@@ -42,11 +42,22 @@ public class PlayerMovement : MonoBehaviour
     public bool IsSpinning() => isSpinning;
     public bool IsFalling() => rb.linearVelocity.y < -0.05f;
 
+    public GameObject tree1;
+    public GameObject tree2;
+    public GameObject tree3;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         defaultGravityScale = rb.gravityScale;
+    }
+
+    private void Start()
+    {
+        tree1.SetActive(true);
+        tree2.SetActive(false);
+        tree3.SetActive(false);
     }
 
     void Update()
