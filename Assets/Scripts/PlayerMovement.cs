@@ -1,11 +1,20 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private enum DeathType { None, Normal, Final }
+    private DeathType currentDeath = DeathType.None;
+    private bool isDead = false;
+
+    [SerializeField]
+    private GameObject GameOverScreen;
+
     private float RunningSpeed = 8f;
-    private float JumpVelocity = 10f;
+    private float JumpVelocity = 14f;
     private bool isFacingRight = true;
     private bool isGrounded = true;
     public LayerMask GroundLayer;
@@ -51,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         defaultGravityScale = rb.gravityScale;
+        GameOverScreen.SetActive(false);
+        GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
     }
 
     private void Start()
@@ -63,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
        
-
+        if(isDead) return;  
         AnimationController();
         isGrounded = IsGrounded();
 
@@ -234,13 +245,59 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die()
     {
-       // Destroy(gameObject);
-        Debug.Log("Player Dies");
+        if (isDead) return;
+
+        isDead = true;
+        currentDeath = DeathType.Normal;
         anim.SetBool("isDead", true);
-       
+
+        StartCoroutine(HandleDeath());
     }
 
-    public void handlePowerUps(string powerUpName)
+    public void FinalDeath()
+    {
+       
+        if (isDead) return;
+        GameOverScreen.SetActive(true);
+        rb.sharedMaterial = null;
+        isDead = true;
+        currentDeath = DeathType.Final;
+        anim.SetBool("isDead", true);
+        Debug.Log("Final death");
+        StartCoroutine(HandleDeath());
+    }
+
+    private System.Collections.IEnumerator HandleDeath()
+    {
+        // Get the animation length
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        float waitTime = 1f;
+
+        yield return new WaitForSeconds(waitTime);
+
+        if (currentDeath == DeathType.Normal)
+            Respawn();
+        else if (currentDeath == DeathType.Final)
+            GameOver();
+    }
+    private void Respawn()
+    {
+        transform.position = PlayerSpawnPoint.position;
+
+        // Reset state
+        anim.SetBool("isDead", false);
+        isDead = false;
+        currentDeath = DeathType.None;
+        handlePowerUps("Reset");
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over!");
+    }
+
+
+        public void handlePowerUps(string powerUpName)
     {
         switch (powerUpName)
         {
@@ -267,6 +324,16 @@ public class PlayerMovement : MonoBehaviour
                     doubleJumpUnlocked = false;
                     break;
                 }
+            case "Reset":
+                {
+                    CanThrowRock = false;
+                    canDoubleJump = false;
+                    hasSpinPower = false;
+                    CanPickRock = false;
+                    doubleJumpUnlocked = false;
+                    break;
+
+                }
         }
 
     }
@@ -276,5 +343,15 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y) ;
     }
 
+    public void ReloadCurrentScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+       
 
+    }
+
+    public void ResetPowerUps()
+    {
+
+    }
 }
