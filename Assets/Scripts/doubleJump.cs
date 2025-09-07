@@ -12,7 +12,9 @@ public class DoubleJump : MonoBehaviour
             PlayerMovement player = other.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                player.AddHeart(heartValue);
+                //player.AddHeart(heartValue); 
+                player.doubleJumpUnlocked = true;
+                player.handlePowerUps("DoubleJump");
                 Debug.Log("Collected a Heart ");
             }
 

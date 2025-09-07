@@ -11,11 +11,15 @@ public class Rock : MonoBehaviour
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
             if (Player != null)
             {
-                Player.CanThrowRock = true;
-                Debug.Log("Setting the CanThrow value");
+                if (Player.CanPickRock)
+                {
+                    Player.CanThrowRock = true;
+                    Debug.Log("Setting the CanThrow value");
+                    Destroy(gameObject);
+                }
             }
 
-            Destroy(gameObject);
+            
         }
     }
 }
