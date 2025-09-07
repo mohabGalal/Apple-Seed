@@ -7,7 +7,7 @@ public class PowerUpLogic : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Hit PowerUp");
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
     }

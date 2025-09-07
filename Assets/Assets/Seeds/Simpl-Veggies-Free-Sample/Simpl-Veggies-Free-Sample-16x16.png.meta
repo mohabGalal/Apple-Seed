@@ -409,7 +409,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Simpl-Veggies-Free-Sample-16x16_0: 7825543314901394282
+      Simpl-Veggies-Free-Sample-16x16_1: -2313176687632363998
+      Simpl-Veggies-Free-Sample-16x16_10: 8325911354364250277
+      Simpl-Veggies-Free-Sample-16x16_11: -3215490090994539625
+      Simpl-Veggies-Free-Sample-16x16_2: 3442001624325375494
+      Simpl-Veggies-Free-Sample-16x16_3: 2305708708868353382
+      Simpl-Veggies-Free-Sample-16x16_4: 1413750605491787471
+      Simpl-Veggies-Free-Sample-16x16_5: 8167106996660553327
+      Simpl-Veggies-Free-Sample-16x16_6: -1328068527241606203
+      Simpl-Veggies-Free-Sample-16x16_7: -2131880584053547445
+      Simpl-Veggies-Free-Sample-16x16_8: 289049597109756626
+      Simpl-Veggies-Free-Sample-16x16_9: -7524186644854614337
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
