@@ -1,10 +1,10 @@
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-// ya mohaaaaaaaaaaaaaaaaaaaaab 
+
 public class DoubleJump : MonoBehaviour
 {
-    public int heartValue = 0;
+    public static int heartValue = 0;
     public GameObject DoubleScreen;
 
     private void OnTriggerEnter2D(Collider2D other)
