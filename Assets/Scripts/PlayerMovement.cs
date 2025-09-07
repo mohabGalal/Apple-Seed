@@ -239,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
         Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
         rockRb.AddForce(direction * throwForce, ForceMode2D.Impulse);
+        Destroy(rock, 1.5f);
     }
     public void canThrowRock()
     {
