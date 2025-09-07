@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform handPointt;
     public bool doubleJumpUnlocked = false;
 
+    public Vector3 PlayerPos;
+    public Transform PlayerSpawnPoint;
+
     public bool LiquidPicked;
 
     private Rigidbody2D rb;
@@ -48,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+       
+
         AnimationController();
         isGrounded = IsGrounded();
 
@@ -253,6 +258,11 @@ public class PlayerMovement : MonoBehaviour
                 }
         }
 
+    }
+
+    public void SeedCollected()
+    {
+        transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y) ;
     }
 
 

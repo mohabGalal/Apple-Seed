@@ -7,6 +7,9 @@ TagManager:
   - StartPoint
   - EndPoint
   - Rock
+  - Seed1
+  - Seed2
+  - tree
   layers:
   - Default
   - TransparentFX
