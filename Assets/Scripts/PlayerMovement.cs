@@ -1,11 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using NUnit.Framework;
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
+    private List<GameObject> power = new List<GameObject>();
     private enum DeathType { None, Normal, Final }
     private DeathType currentDeath = DeathType.None;
     private bool isDead = false;
@@ -100,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
                 StartSpin();
         }
 
-        Debug.Log($"can throw : {CanThrowRock}");
+        //Debug.Log($"can throw : {CanThrowRock}");
     }
 
 
@@ -289,6 +291,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         currentDeath = DeathType.None;
         handlePowerUps("Reset");
+        ResetPowerUps();
     }
 
     private void GameOver()
@@ -340,7 +343,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void SeedCollected()
     {
-        transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y) ;
+        transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y);
+        handlePowerUps("Reset");
+        ResetPowerUps();
     }
 
     public void ReloadCurrentScene()
@@ -352,6 +357,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetPowerUps()
     {
+        foreach(GameObject go in power)
+        {
+            go.SetActive(true);
+            Debug.Log($"setactive {go}");
+        }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<PowerUpLogic>(out _))
+        {
+            power.Add(collision.gameObject);
+        }
     }
 }

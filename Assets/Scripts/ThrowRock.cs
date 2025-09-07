@@ -23,7 +23,8 @@ public class ThrowRock : MonoBehaviour
             {
                 Player.CanPickRock = true;
                 Player.handlePowerUps("Throw");
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

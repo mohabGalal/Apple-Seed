@@ -149,8 +149,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.028914532, y: -0.017008558}
-  m_Radius: 0.31345195
+  m_Offset: {x: 0.0050448985, y: -0.0062668594}
+  m_Radius: 0.48047352
 --- !u!114 &-45304197413435662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,8 +197,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.359375
+  m_Offset: {x: 0.032224398, y: -0.04773992}
+  m_Radius: 0.29850683
 --- !u!50 &-2909979916197687599
 Rigidbody2D:
   serializedVersion: 5
@@ -207,7 +207,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7622836330867447205}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -225,7 +225,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!114 &2384952510666493098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,3 +238,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932723f190fa6044a932ce5649f87681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpinScreen: {fileID: 0}

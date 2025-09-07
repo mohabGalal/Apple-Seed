@@ -26,7 +26,7 @@ public class DoubleJump : MonoBehaviour
                 Debug.Log("Collected a Heart ");
             }
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
