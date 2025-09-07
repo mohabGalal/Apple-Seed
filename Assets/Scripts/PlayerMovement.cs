@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform handPointt;
     public bool doubleJumpUnlocked = false;
 
+    public Vector3 PlayerPos;
+    public Transform PlayerSpawnPoint;
+
     public bool LiquidPicked;
 
     private Rigidbody2D rb;
@@ -39,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
     public bool IsSpinning() => isSpinning;
     public bool IsFalling() => rb.linearVelocity.y < -0.05f;
 
+    public GameObject tree1;
+    public GameObject tree2;
+    public GameObject tree3;
+
 
     void Awake()
     {
@@ -46,8 +53,17 @@ public class PlayerMovement : MonoBehaviour
         defaultGravityScale = rb.gravityScale;
     }
 
+    private void Start()
+    {
+        tree1.SetActive(true);
+        tree2.SetActive(false);
+        tree3.SetActive(false);
+    }
+
     void Update()
     {
+       
+
         AnimationController();
         isGrounded = IsGrounded();
 
@@ -253,6 +269,11 @@ public class PlayerMovement : MonoBehaviour
                 }
         }
 
+    }
+
+    public void SeedCollected()
+    {
+        transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y) ;
     }
 
 
