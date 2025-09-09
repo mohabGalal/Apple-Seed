@@ -1,7 +1,4 @@
-﻿using NUnit.Framework;
-using System.Security.Cryptography.X509Certificates;
-using UnityEditor.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
