@@ -59,7 +59,8 @@ public class Snail : BaseEnemy
 
     protected override void Move()
     {
-        rb.linearVelocityX = speed * DirectionX; 
+        // rb.linearVelocityX = speed * DirectionX; 
+        rb.linearVelocity = new Vector2(speed * DirectionX, rb.linearVelocity.y);
     }
 
     public override void Attack()
