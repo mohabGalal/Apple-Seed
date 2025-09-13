@@ -30,13 +30,16 @@ public class PlayerMovement : MonoBehaviour
     public float throwForce = 10f;
     public Transform handPointt;
     public bool doubleJumpUnlocked = false;
+    public bool HasKey;
+    public bool ShouldFly = false;
 
     public Vector3 PlayerPos;
     public Transform PlayerSpawnPoint;
+    public Transform AppleAttachement;
 
     public bool LiquidPicked;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     [SerializeField] public bool hasSpinPower = false; 
     [SerializeField] private float spinDelay = 0.8f;    // small delay after jump before spin can start
@@ -47,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isSpinning = false;
     private float jumpStartTime = -999f;
 
+    public Transform DropPoint;
+
     public bool IsSpinning() => isSpinning;
     public bool IsFalling() => rb.linearVelocity.y < -0.05f;
 
@@ -54,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject tree2;
     public GameObject tree3;
 
+    public float originalGravityScale = 1f; // Store original gravity
 
     void Awake()
     {
@@ -65,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+            originalGravityScale = rb.gravityScale; // Store original gravity scale
+        
         tree1.SetActive(true);
         tree2.SetActive(false);
         tree3.SetActive(false);
@@ -76,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         if(isDead) return;  
         AnimationController();
         isGrounded = IsGrounded();
+
+        if (ShouldFly)
+        {
+            FLyWithEagle();
+        }
 
         if (isGrounded)
         {
@@ -173,6 +186,12 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = false;
         }
 
+    }
+
+    public void FLyWithEagle()
+    {
+        transform.position = AppleAttachement.transform.position;
+        rb.gravityScale = 0;
     }
 
     private void SpinJump()
