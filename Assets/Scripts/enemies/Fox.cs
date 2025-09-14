@@ -67,4 +67,6 @@ public class fox : BaseEnemy
             ShouldFlip = false;
         }
     }
+
+
 }
