@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     bool isMoving;
     public bool CanThrowRock;
     public bool CanPickRock;
+    public bool IsFrozen = false;
     // public Transform handPoint;      
     public GameObject rockPrefab;
     public float throwForce = 10f;
@@ -84,6 +85,13 @@ public class PlayerMovement : MonoBehaviour
     {
 
         if (isDead) return;
+        if (IsFrozen)
+        {
+            rb.linearVelocity = Vector2.zero;
+            anim.SetBool("isMoving", false);
+            return;
+        }
+
         AnimationController();
         isGrounded = IsGrounded();
 
@@ -311,6 +319,11 @@ public class PlayerMovement : MonoBehaviour
         currentDeath = DeathType.None;
         handlePowerUps("Reset");
         ResetPowerUps();
+        EagleSpawner spawner = FindObjectOfType<EagleSpawner>();
+        if (spawner != null)
+        {
+            spawner.RespawnEagles();
+        }
     }
 
     private void GameOver()
@@ -328,7 +341,7 @@ public class PlayerMovement : MonoBehaviour
                     CanThrowRock = false;
                     hasSpinPower = false;
                     CanPickRock = false;
-                    HasKey = false;   // disable key if active
+                    HasKey = false;
                     break;
                 }
             case "Throw":
@@ -336,7 +349,7 @@ public class PlayerMovement : MonoBehaviour
                     canDoubleJump = false;
                     hasSpinPower = false;
                     doubleJumpUnlocked = false;
-                    HasKey = false;   // disable key if active
+                    HasKey = false;
                     break;
                 }
             case "SpinJump":
@@ -345,10 +358,10 @@ public class PlayerMovement : MonoBehaviour
                     canDoubleJump = false;
                     CanPickRock = false;
                     doubleJumpUnlocked = false;
-                    HasKey = false;   // disable key if active
+                    HasKey = false;
                     break;
                 }
-            case "Key":   
+            case "Key":
                 {
                     CanThrowRock = false;
                     canDoubleJump = false;
@@ -356,7 +369,7 @@ public class PlayerMovement : MonoBehaviour
                     CanPickRock = false;
                     doubleJumpUnlocked = false;
 
-                    HasKey = true;   // enable key power
+                    HasKey = true;
                     break;
                 }
             case "Reset":

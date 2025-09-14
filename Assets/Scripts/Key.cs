@@ -10,7 +10,8 @@ public class Key : MonoBehaviour
             PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                player.handlePowerUps("Key"); 
+                player.handlePowerUps("Key");
+                player.IsFrozen = true;  
                 Destroy(gameObject);
             }
         }
