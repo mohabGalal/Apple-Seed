@@ -2,17 +2,24 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
     private List<GameObject> power = new List<GameObject>();
+
+    public GameObject CurrentPowerUp;
+    CurrentPowerUp script;
+
+    public GameObject seedLogic;
+    SeedLogic seedScript;
     private enum DeathType { None, Normal, Final }
     private DeathType currentDeath = DeathType.None;
     private bool isDead = false;
 
     [SerializeField]
     private GameObject GameOverScreen;
+    public GameObject WinScreen;
 
     private float RunningSpeed = 8f;
     private float JumpVelocity = 14f;
@@ -70,12 +77,14 @@ public class PlayerMovement : MonoBehaviour
         defaultGravityScale = rb.gravityScale;
         GameOverScreen.SetActive(false);
         GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
+        WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
     }
 
     private void Start()
     {
         originalGravityScale = rb.gravityScale; // Store original gravity scale
-
+         script = CurrentPowerUp.GetComponent<CurrentPowerUp>();
+       seedScript = seedLogic.GetComponent<SeedLogic>();
         tree1.SetActive(true);
         tree2.SetActive(false);
         tree3.SetActive(false);
@@ -334,6 +343,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void handlePowerUps(string powerUpName)
     {
+        script.HandleCurrentPowerUp_UI(powerUpName);
         switch (powerUpName)
         {
             case "DoubleJump":
@@ -342,6 +352,8 @@ public class PlayerMovement : MonoBehaviour
                     hasSpinPower = false;
                     CanPickRock = false;
                     HasKey = false;
+                    
+                    
                     break;
                 }
             case "Throw":
@@ -395,6 +407,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        SeedLogic.ResetSeedCount();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
