@@ -38,18 +38,27 @@ public class Eagle : BaseEnemy
             carriedPlayer = collision.collider.GetComponent<PlayerMovement>();
             if (carriedPlayer != null)
             {
-               // dropPoint = carriedPlayer.DropPoint;
-                // Start carrying sequence
+                if (!carriedPlayer.HasKey)
+                {
+                    carriedPlayer.Die();
+                    return;
+                }
+
                 currentState = EagleState.Lifting;
                 carriedPlayer.ShouldFly = true;
                 carriedPlayer.AppleAttachement = appleAttachement.transform;
-
-                // Set lift target (current position + lift height)
+                carriedPlayer.IsFrozen = false;
                 liftTarget = transform.position + Vector3.up * liftHeight;
                 startCarryPosition = transform.position;
             }
         }
+        if (collision.collider.CompareTag("Rock"))
+        {
+            base.Die();
+        }
     }
+
+
 
     private bool ShouldBeActive()
     {
@@ -209,6 +218,7 @@ public class Eagle : BaseEnemy
             Flip();
         }
     }
+  
 
     protected override void Move() { }
     public override void Attack() { }
