@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     bool isMoving;
     public bool CanThrowRock;
     public bool CanPickRock;
-   // public Transform handPoint;      
-    public GameObject rockPrefab;    
+    // public Transform handPoint;      
+    public GameObject rockPrefab;
     public float throwForce = 10f;
     public Transform handPointt;
     public bool doubleJumpUnlocked = false;
@@ -43,10 +43,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
 
-    [SerializeField] public bool hasSpinPower = false; 
+    [SerializeField] public bool hasSpinPower = false;
     [SerializeField] private float spinDelay = 0.8f;    // small delay after jump before spin can start
     [SerializeField] private float spinBounceVelocity = 10f;
-    [SerializeField] private float spinGravityScale = 1.2f; 
+    [SerializeField] private float spinGravityScale = 1.2f;
     private float defaultGravityScale;
 
     private bool isSpinning = false;
@@ -73,8 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-            originalGravityScale = rb.gravityScale; // Store original gravity scale
-        
+        originalGravityScale = rb.gravityScale; // Store original gravity scale
+
         tree1.SetActive(true);
         tree2.SetActive(false);
         tree3.SetActive(false);
@@ -82,8 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-       
-        if(isDead) return;  
+
+        if (isDead) return;
         AnimationController();
         isGrounded = IsGrounded();
 
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
             throwRock();
         }
 
-        
+
         if (!isGrounded && hasSpinPower && Input.GetKey(KeyCode.Space) && !isSpinning)
         {
             if (Time.time - jumpStartTime >= spinDelay)
@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     private void AnimationController()
     {
         anim.SetBool("isMoving", isMoving);
-        
+
     }
 
     private void HandleMovementInput()
@@ -131,22 +131,22 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(InputX * RunningSpeed, rb.linearVelocity.y);
 
         isMoving = InputX != 0;
-        
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
                 Jump();
-           else
+            else
                 DoubleJump();
 
-        
+
             anim.SetTrigger("isJumping");
         }
 
 
 
-            if (isFacingRight && InputX < 0)
+        if (isFacingRight && InputX < 0)
         {
             Flip();
         }
@@ -199,14 +199,14 @@ public class PlayerMovement : MonoBehaviour
     private void SpinJump()
     {
         anim.SetTrigger("SpinJump");
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity* 1.3f);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity * 1.3f);
         isGrounded = false;
     }
 
     private void StartSpin()
     {
         isSpinning = true;
-        anim.SetBool("isSpinning", true);  
+        anim.SetBool("isSpinning", true);
         rb.gravityScale = spinGravityScale;
     }
 
@@ -218,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = defaultGravityScale;
     }
 
-    
+
     public void Bounce()
     {
         if (!isSpinning && hasSpinPower && Input.GetKey(KeyCode.Space))
@@ -237,10 +237,10 @@ public class PlayerMovement : MonoBehaviour
         // transform.rotation = Quaternion.Euler(0,isFacingRight ? 180 : 0,0);
     }
 
-  /*  public void AddHeart(int amount)
-    {
-        heartsCollected += amount;
-    }*/
+    /*  public void AddHeart(int amount)
+      {
+          heartsCollected += amount;
+      }*/
 
     public void throwRock()
     {
@@ -249,9 +249,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Calculate spawn position relative to player
         Vector3 spawnPosition = transform.position;
-        float handOffset = isFacingRight ? 1f : -1f; 
+        float handOffset = isFacingRight ? 1f : -1f;
         spawnPosition.x += handOffset;
-        spawnPosition.y += 0.5f; 
+        spawnPosition.y += 0.5f;
 
         GameObject rock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
@@ -277,7 +277,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void FinalDeath()
     {
-       
+
         if (isDead) return;
         GameOverScreen.SetActive(true);
         rb.sharedMaterial = null;
@@ -319,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-        public void handlePowerUps(string powerUpName)
+    public void handlePowerUps(string powerUpName)
     {
         switch (powerUpName)
         {
@@ -328,6 +328,7 @@ public class PlayerMovement : MonoBehaviour
                     CanThrowRock = false;
                     hasSpinPower = false;
                     CanPickRock = false;
+                    HasKey = false;   // disable key if active
                     break;
                 }
             case "Throw":
@@ -335,8 +336,8 @@ public class PlayerMovement : MonoBehaviour
                     canDoubleJump = false;
                     hasSpinPower = false;
                     doubleJumpUnlocked = false;
+                    HasKey = false;   // disable key if active
                     break;
-
                 }
             case "SpinJump":
                 {
@@ -344,6 +345,18 @@ public class PlayerMovement : MonoBehaviour
                     canDoubleJump = false;
                     CanPickRock = false;
                     doubleJumpUnlocked = false;
+                    HasKey = false;   // disable key if active
+                    break;
+                }
+            case "Key":   
+                {
+                    CanThrowRock = false;
+                    canDoubleJump = false;
+                    hasSpinPower = false;
+                    CanPickRock = false;
+                    doubleJumpUnlocked = false;
+
+                    HasKey = true;   // enable key power
                     break;
                 }
             case "Reset":
@@ -353,16 +366,16 @@ public class PlayerMovement : MonoBehaviour
                     hasSpinPower = false;
                     CanPickRock = false;
                     doubleJumpUnlocked = false;
+                    HasKey = false;
                     break;
-
                 }
         }
-
     }
+
 
     public void SeedCollected()
     {
-        transform.position = new Vector3 (PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y);
+        transform.position = new Vector3(PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y);
         handlePowerUps("Reset");
         ResetPowerUps();
     }
@@ -370,13 +383,13 @@ public class PlayerMovement : MonoBehaviour
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-       
+
 
     }
 
     public void ResetPowerUps()
     {
-        foreach(GameObject go in power)
+        foreach (GameObject go in power)
         {
             go.SetActive(true);
             Debug.Log($"setactive {go}");

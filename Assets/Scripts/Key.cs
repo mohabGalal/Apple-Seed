@@ -7,12 +7,13 @@ public class Key : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             Debug.Log("Collision with player");
-           PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+            PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                player.HasKey = true;
+                player.handlePowerUps("Key"); 
                 Destroy(gameObject);
             }
         }
     }
+
 }
