@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+
+
 public class PlayerMovement : MonoBehaviour
 {
     private List<GameObject> power = new List<GameObject>();
