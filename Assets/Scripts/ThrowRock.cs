@@ -11,6 +11,8 @@ public class ThrowRock : MonoBehaviour
         {
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
 
+            SoundManager.Instance.PlayPowerUp();
+
             starCollected++;
             if(starCollected == 1)
             {

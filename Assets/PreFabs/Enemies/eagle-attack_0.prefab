@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1842650672692451681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.009, y: -0.269, z: 0}
+  m_LocalPosition: {x: -0.102, y: -0.269, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,11 +208,44 @@ MonoBehaviour:
   DirectionX: 8
   ExplosionPreFab: {fileID: 0}
   swoopSpeed: 5
-  carrySpeed: 3
+  carrySpeed: 6
   activationDistance: 20
   dropPoint: {fileID: 0}
   liftHeight: 3
   appleAttachement: {fileID: 1272600636464086507}
+  EaglePath:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0012954613
+      value: 0.0018708473
+      inSlope: 0.08119747
+      outSlope: 0.08119747
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.17226902
+    - serializedVersion: 3
+      time: 0.41554034
+      value: 0.73744214
+      inSlope: 0.056974273
+      outSlope: 0.056974273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.3830205
+    - serializedVersion: 3
+      time: 0.94696045
+      value: 0.0028266907
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!50 &7519237527905470503
 Rigidbody2D:
   serializedVersion: 5

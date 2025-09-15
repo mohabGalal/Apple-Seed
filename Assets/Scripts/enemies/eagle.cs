@@ -4,7 +4,7 @@ public class Eagle : BaseEnemy
 {
     [Header("Movement")]
     public float swoopSpeed = 5f;
-    public float carrySpeed = 3f;
+    public float carrySpeed = 6f;
     public float activationDistance = 50f;
 
     [Header("Carry Behavior")]
@@ -17,6 +17,10 @@ public class Eagle : BaseEnemy
     private bool isFlipped = false;
     private Camera mainCamera;
     private PlayerMovement carriedPlayer;
+
+    public AnimationCurve EaglePath;
+    float Duration = 1f;
+    float time;
 
     // State management
     private enum EagleState { Hunting, Lifting, Carrying, Dropping }
@@ -35,12 +39,15 @@ public class Eagle : BaseEnemy
     {
         if (collision.collider.CompareTag("Player") && currentState == EagleState.Hunting)
         {
+            
             carriedPlayer = collision.collider.GetComponent<PlayerMovement>();
             if (carriedPlayer != null)
             {
                 if (!carriedPlayer.HasKey)
                 {
+                    
                     carriedPlayer.Die();
+                    Destroy(gameObject);
                     return;
                 }
 
@@ -151,15 +158,23 @@ public class Eagle : BaseEnemy
 
         Vector2 horizontalDirection = new Vector2(dropPoint.position.x - transform.position.x, 0).normalized;
 
-        rb.linearVelocity = new Vector2(horizontalDirection.x * carrySpeed, -0.3f);
+        if(time < Duration)
+        {
+            time += Time.deltaTime;
+            time = time / Duration;
+        }
+
+        
+
+        rb.linearVelocity = new Vector2(horizontalDirection.x * carrySpeed , -1);
 
         if (horizontalDirection.x > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, -15f); // Slight downward tilt when moving right
+            transform.rotation = Quaternion.Euler(0, 0, -30f); // Slight downward tilt when moving right
         }
         else if (horizontalDirection.x < 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 15f);  // Slight downward tilt when moving left
+            transform.rotation = Quaternion.Euler(0, 0, 30f);  // Slight downward tilt when moving left
         }
 
         // Custom flipping for horizontal carrying
