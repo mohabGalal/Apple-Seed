@@ -7,7 +7,9 @@ public class fox : BaseEnemy
     private Vector2 direction;
     private bool ShouldFlip = false;
     private bool isFlipped = false;
-    private float throwForce = 15f;
+    public float throwForce = 15f;
+    public float throwDistance = 10f;
+    public float destroyTime = 2f;
     private bool CanAttack = true;
     public float attackCooldown = 3f;
 
@@ -17,7 +19,7 @@ public class fox : BaseEnemy
         HandleFlipping();
         float distance = Vector3.Distance(transform.position, player.position);
 
-        if (distance < 6 && CanAttack)
+        if (distance < throwDistance && CanAttack)
         {
             Attack();
         }
@@ -31,9 +33,24 @@ public class fox : BaseEnemy
 
         // Start cooldown
         StartCoroutine(AttackCooldown());
-        Destroy(bullet, 1f);
+        Destroy(bullet, destroyTime);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Player"))
+        {
+            PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.Die();
+            }
+        }
+        if (collision.collider.CompareTag("Rock"))
+        {
+            base.Die();
+        }
 
+    }
     private System.Collections.IEnumerator AttackCooldown()
     {
         CanAttack = false;
