@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject CurrentPowerUp;
     CurrentPowerUp script;
 
+    public GameObject MainMenu;
+
     public GameObject seedLogic;
     SeedLogic seedScript;
     private enum DeathType { None, Normal, Final }
@@ -78,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         GameOverScreen.SetActive(false);
         GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
         WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
+       // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
     }
 
     private void Start()
@@ -88,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         tree1.SetActive(true);
         tree2.SetActive(false);
         tree3.SetActive(false);
+        
     }
 
     void Update()
@@ -427,6 +431,11 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
+    }
+
+    public void StartGame()
+    {
+        MainMenu.SetActive(false);
     }
 
     public void ResetPowerUps()
