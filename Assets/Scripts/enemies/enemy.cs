@@ -40,6 +40,7 @@ public abstract class BaseEnemy : MonoBehaviour
         GameObject Explosion = Instantiate(ExplosionPreFab, transform.position, Quaternion.identity);
 
         Destroy(Explosion, 0.6f);
+        SoundManager.Instance.PlayEnemyHit();
 
     }
 }

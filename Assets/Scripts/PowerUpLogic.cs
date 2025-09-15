@@ -8,6 +8,7 @@ public class PowerUpLogic : MonoBehaviour
         {
             Debug.Log("Hit PowerUp");
             gameObject.SetActive(false);
+            SoundManager.Instance.PlayPowerUp();
         }
 
     }

@@ -186,6 +186,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpVelocity);
         isGrounded = false;
         jumpStartTime = Time.time;   // mark jump start
+        SoundManager.Instance.PlayJump();
     }
 
 
@@ -225,6 +226,7 @@ public class PlayerMovement : MonoBehaviour
         isSpinning = true;
         anim.SetBool("isSpinning", true);
         rb.gravityScale = spinGravityScale;
+        SoundManager.Instance.PlaySpinJump();
     }
 
     private void EndSpin()
@@ -233,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
         //hasSpinPower = false;
         anim.SetBool("isSpinning", false);
         rb.gravityScale = defaultGravityScale;
+        SoundManager.Instance.StopSFX();
     }
 
 
@@ -264,6 +267,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetTrigger("Throw");
         CanThrowRock = false;
 
+        
         // Calculate spawn position relative to player
         Vector3 spawnPosition = transform.position;
         float handOffset = isFacingRight ? 1f : -1f;
@@ -274,6 +278,8 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
         Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
         rockRb.AddForce(direction * throwForce, ForceMode2D.Impulse);
+
+        SoundManager.Instance.PlayThrow();
         Destroy(rock, 1.5f);
     }
     public void canThrowRock()
@@ -297,11 +303,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (isDead) return;
         GameOverScreen.SetActive(true);
+        SoundManager.Instance.PlayGameOver();
+        SoundManager.Instance.StopMainTheme();
+
         rb.sharedMaterial = null;
         isDead = true;
         currentDeath = DeathType.Final;
         anim.SetBool("isDead", true);
         Debug.Log("Final death");
+        SoundManager.Instance.PlayPlayerHit();
         StartCoroutine(HandleDeath());
     }
 
@@ -314,21 +324,24 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         if (currentDeath == DeathType.Normal)
+        {
             Respawn();
+            SoundManager.Instance.PlayPlayerHit();
+        }
         else if (currentDeath == DeathType.Final)
             GameOver();
     }
     private void Respawn()
     {
         transform.position = PlayerSpawnPoint.position;
-
+        SoundManager.Instance.PlayMainTheme();
         // Reset state
         anim.SetBool("isDead", false);
         isDead = false;
         currentDeath = DeathType.None;
         handlePowerUps("Reset");
         ResetPowerUps();
-        EagleSpawner spawner = FindObjectOfType<EagleSpawner>();
+        EagleSpawner spawner = Object.FindFirstObjectByType<EagleSpawner>();
         if (spawner != null)
         {
             spawner.RespawnEagles();
@@ -338,6 +351,7 @@ public class PlayerMovement : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Game Over!");
+      
     }
 
 
@@ -407,6 +421,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        SoundManager.Instance.PlayMainTheme();
+        SoundManager.Instance.StopGameOver();
         SeedLogic.ResetSeedCount();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 

@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
+
             Debug.Log("Collision with player");
-            PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+            PlayerMovement player = collision.GetComponent<PlayerMovement>();
             if (player != null)
             {
                 player.handlePowerUps("Key");
-                player.IsFrozen = true;  
-                Destroy(gameObject);
+                player.IsFrozen = true;
+                gameObject.SetActive(false);
             }
         }
     }

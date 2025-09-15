@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,8 @@ public class SeedLogic : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            GetComponent<Animator>().enabled = false;
+            GetComponent<SpriteRenderer>().sprite = null;
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
             if (Player != null)
             {
@@ -32,9 +34,7 @@ public class SeedLogic : MonoBehaviour
             
             if(seedsCollected == 1)
             {
-                tree1.SetActive(false);
-                tree2.SetActive(true);
-                tree3.SetActive(false);
+                StartCoroutine(SetTreeActive());
                 Color c = seed1.color;
                 c.a = 1;
                 seed1.color = c;
@@ -42,14 +42,14 @@ public class SeedLogic : MonoBehaviour
 
             if (seedsCollected == 2)
             {
-                tree1.SetActive(false);
-                tree2.SetActive(false);
-                tree3.SetActive(true);
+                StartCoroutine(SetTreeActive());
                 Color c = seed2.color;
                 c.a = 1;
                 seed2.color = c;
-                WinScreen.SetActive(true);
+
             }
+
+           
         }
     }
 
@@ -58,5 +58,31 @@ public class SeedLogic : MonoBehaviour
         seedsCollected = 0;
     }
 
+
+    IEnumerator SetTreeActive()
+    {
+        Debug.Log("Seed 1 collected");
+        yield return new WaitForSeconds(1);
+        Debug.Log("After 1 second");
+        if (seedsCollected == 1)
+        {
+            
+            tree1.SetActive(false);
+            tree2.SetActive(true);
+            tree3.SetActive(false);
+
+        }
+
+        if (seedsCollected == 2)
+        {
+            tree1.SetActive(false);
+            tree2.SetActive(false);
+            tree3.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            WinScreen.SetActive(true);
+            SoundManager.Instance.PlayWinScreen();
+        }
+        Destroy(gameObject);
+    }
 
 }

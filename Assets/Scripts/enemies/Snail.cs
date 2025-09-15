@@ -54,7 +54,7 @@ public class Snail : BaseEnemy
     override public void Die()
     {
         base.Die();
-        Debug.Log("Rabbit Killed");
+        Debug.Log($"snail Killed at {gameObject.transform.position}");
     }
 
     protected override void Move()
