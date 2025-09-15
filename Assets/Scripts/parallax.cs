@@ -25,10 +25,15 @@ public class ParallaxLoop : MonoBehaviour
         transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier, 0f, 0f);
         lastCameraPosition = cameraTransform.position;
 
-        if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
+        float distance = cameraTransform.position.x - transform.position.x;
+
+        if (distance >= textureUnitSizeX)
         {
-            float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
-            transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y, transform.position.z);
+            transform.position += new Vector3(textureUnitSizeX, 0f, 0f);
+        }
+        else if (distance <= -textureUnitSizeX)
+        {
+            transform.position -= new Vector3(textureUnitSizeX, 0f, 0f);
         }
     }
 }

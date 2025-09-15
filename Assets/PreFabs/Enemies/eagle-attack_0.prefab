@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  speed: 2
+  speed: 1.2
   DirectionX: 8
   ExplosionPreFab: {fileID: 0}
   swoopSpeed: 5

@@ -21,6 +21,8 @@ public class Eagle : BaseEnemy
     public AnimationCurve EaglePath;
     float Duration = 1f;
     float time;
+    public float currentTime = 15f;
+    private bool isMoving = false;
 
     // State management
     private enum EagleState { Hunting, Lifting, Carrying, Dropping }
@@ -47,7 +49,7 @@ public class Eagle : BaseEnemy
                 {
                     
                     carriedPlayer.Die();
-                    Destroy(gameObject);
+                    Destroy(gameObject, 1f);
                     return;
                 }
 
@@ -77,6 +79,8 @@ public class Eagle : BaseEnemy
     override protected void Update()
     {
         base.Update();
+        if(ShouldBeActive()) 
+            currentTime = Mathf.Max(0, currentTime - Time.deltaTime);
 
         switch (currentState)
         {
@@ -106,6 +110,8 @@ public class Eagle : BaseEnemy
     private void HandleHunting()
     {
         // Check if we should start hunting
+
+
         if (!isActivelyHunting)
         {
             if (!ShouldBeActive())
@@ -124,6 +130,7 @@ public class Eagle : BaseEnemy
         // Hunt the player
         if (player != null)
         {
+            if (currentTime == 0 ) { Destroy(gameObject); }
             direction = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = direction * swoopSpeed;
             HandleFlipping();
