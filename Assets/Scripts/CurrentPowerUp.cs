@@ -44,6 +44,14 @@ public class CurrentPowerUp : MonoBehaviour
                     Key.SetActive(true);
                     break;
                 }
+            default:
+                {
+                    Heart.SetActive(false);
+                    Liquid.SetActive(false);
+                    Star.SetActive(false);
+                    Key.SetActive(false);
+                    break;
+                }
         }
 
     }
