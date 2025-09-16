@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class Eagle : BaseEnemy
 {
@@ -18,8 +19,9 @@ public class Eagle : BaseEnemy
     public AnimationCurve EaglePath;
     float Duration = 1f;
     float time;
-    public float currentTime = 5f;
+    public float currentTime = 10f;
     private bool isMoving = false;
+    private bool startHunting = false;
 
     // State management
     private enum EagleState { Hunting, Lifting, Carrying, Dropping }
@@ -67,11 +69,18 @@ public class Eagle : BaseEnemy
             return; // skip rest of logic
         }
 
-        if (ShouldBeActive())
+        if (startHunting)
         {
             currentTime -= Time.deltaTime;
+            Debug.Log($"Current time : {currentTime}");
         }
 
+        if (currentTime <= 0f)
+        {
+            rb.linearVelocity = Vector2.zero;
+            Destroy(gameObject);
+            return;
+        }
         switch (currentState)
         {
             case EagleState.Hunting:
@@ -84,6 +93,7 @@ public class Eagle : BaseEnemy
 
     private void HandleHunting()
     {
+        
         if (!isActivelyHunting)
         {
             if (!ShouldBeActive())
@@ -100,16 +110,11 @@ public class Eagle : BaseEnemy
 
         if (player != null)
         {
-           
-            if (currentTime <= 0f)
-            {
-                rb.linearVelocity = Vector2.zero;
-                Destroy(gameObject);
-                return;
-            }
+
 
             direction = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = direction * swoopSpeed;
+            startHunting = true;
             HandleFlipping();
         }
     }
