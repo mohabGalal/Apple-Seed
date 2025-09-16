@@ -210,8 +210,6 @@ MonoBehaviour:
   swoopSpeed: 5
   carrySpeed: 6
   activationDistance: 20
-  dropPoint: {fileID: 0}
-  liftHeight: 3
   appleAttachement: {fileID: 1272600636464086507}
   EaglePath:
     serializedVersion: 2
@@ -246,6 +244,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  currentTime: 10
 --- !u!50 &7519237527905470503
 Rigidbody2D:
   serializedVersion: 5
