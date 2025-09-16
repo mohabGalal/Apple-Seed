@@ -39,7 +39,7 @@ public class EagleSpawner : MonoBehaviour
             Eagle eagleScript = newEagle.GetComponent<Eagle>();
             if (eagleScript != null && i < dropPoints.Length)
             {
-                eagleScript.dropPoint = dropPoints[i];
+                //eagleScript.dropPoint = dropPoints[i];
             }
         }
     }

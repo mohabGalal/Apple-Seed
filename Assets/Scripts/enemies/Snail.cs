@@ -48,7 +48,14 @@ public class Snail : BaseEnemy
 
     override protected void Update()
     {
+
         base.Update();
+        if (StopGame.Instance != null && StopGame.Instance.IsFrozen())
+        {
+            // Stop movement
+            rb.linearVelocity = Vector2.zero;
+            return; // skip rest of logic
+        }
     }
 
     override public void Die()
