@@ -15,6 +15,12 @@ public class fox : BaseEnemy
 
     override protected void Update()
     {
+        if (StopGame.Instance != null && StopGame.Instance.IsFrozen())
+        {
+            // Stop movement
+            rb.linearVelocity = Vector2.zero;
+            return; // skip rest of logic
+        }
         direction = (player.transform.position - transform.position).normalized;
         HandleFlipping();
         float distance = Vector3.Distance(transform.position, player.position);

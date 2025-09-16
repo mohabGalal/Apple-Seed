@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Eagle : BaseEnemy
 {
@@ -7,21 +7,18 @@ public class Eagle : BaseEnemy
     public float carrySpeed = 6f;
     public float activationDistance = 50f;
 
-    [Header("Carry Behavior")]
-    public Transform dropPoint;          // Where to drop the player
-    public float liftHeight = 1.5f;        // How high to lift before traveling
     public Transform appleAttachement;   // Where player attaches
 
     private Vector2 direction;
     private bool ShouldFlip = false;
     private bool isFlipped = false;
     private Camera mainCamera;
-    private PlayerMovement carriedPlayer;
+    private PlayerMovement Player;
 
     public AnimationCurve EaglePath;
     float Duration = 1f;
     float time;
-    public float currentTime = 15f;
+    public float currentTime = 5f;
     private bool isMoving = false;
 
     // State management
@@ -34,40 +31,24 @@ public class Eagle : BaseEnemy
     {
         base.Awake();
         mainCamera = Camera.main;
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Player = collision.gameObject.GetComponent<PlayerMovement>();
+
         if (collision.collider.CompareTag("Player") && currentState == EagleState.Hunting)
         {
-            
-            carriedPlayer = collision.collider.GetComponent<PlayerMovement>();
-            if (carriedPlayer != null)
-            {
-                if (!carriedPlayer.HasKey)
-                {
-                    
-                    carriedPlayer.Die();
-                    Destroy(gameObject, 1f);
-                    return;
-                }
-
-                currentState = EagleState.Lifting;
-                carriedPlayer.ShouldFly = true;
-                carriedPlayer.AppleAttachement = appleAttachement.transform;
-                carriedPlayer.IsFrozen = false;
-                liftTarget = transform.position + Vector3.up * liftHeight;
-                startCarryPosition = transform.position;
-            }
+            Player.Die();
+            Destroy(gameObject, 1f);
+            return;
         }
+
         if (collision.collider.CompareTag("Rock"))
         {
             base.Die();
         }
     }
-
-
 
     private bool ShouldBeActive()
     {
@@ -79,29 +60,23 @@ public class Eagle : BaseEnemy
     override protected void Update()
     {
         base.Update();
-        if(ShouldBeActive()) 
-            currentTime = Mathf.Max(0, currentTime - Time.deltaTime);
+
+        if (StopGame.Instance != null && StopGame.Instance.IsFrozen())
+        {
+            rb.linearVelocity = Vector2.zero;
+            return; // skip rest of logic
+        }
+
+        if (ShouldBeActive())
+        {
+            currentTime -= Time.deltaTime;
+        }
 
         switch (currentState)
         {
             case EagleState.Hunting:
                 HandleHunting();
                 break;
-            case EagleState.Lifting:
-                HandleLifting();
-                break;
-            case EagleState.Carrying:
-                HandleCarrying();
-                break;
-            case EagleState.Dropping:
-                HandleDropping();
-                break;
-        }
-
-        // Update player position if carrying
-        if (carriedPlayer != null && carriedPlayer.ShouldFly)
-        {
-            carriedPlayer.FLyWithEagle();
         }
     }
 
@@ -109,9 +84,6 @@ public class Eagle : BaseEnemy
 
     private void HandleHunting()
     {
-        // Check if we should start hunting
-
-
         if (!isActivelyHunting)
         {
             if (!ShouldBeActive())
@@ -120,110 +92,25 @@ public class Eagle : BaseEnemy
                 return;
             }
 
-            // Start hunting - from now on, don't check activation distance
             if (player != null)
             {
                 isActivelyHunting = true;
             }
         }
 
-        // Hunt the player
         if (player != null)
         {
-            if (currentTime == 0 ) { Destroy(gameObject); }
+           
+            if (currentTime <= 0f)
+            {
+                rb.linearVelocity = Vector2.zero;
+                Destroy(gameObject);
+                return;
+            }
+
             direction = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = direction * swoopSpeed;
             HandleFlipping();
-
-           // Debug.Log($"Eagle hunting - distance to player: {Vector2.Distance(transform.position, player.position)}");
-        }
-    }
-
-    private void HandleLifting()
-    {
-        // Move up to lift height
-        Vector2 liftDirection = (liftTarget - transform.position).normalized;
-        rb.linearVelocity = liftDirection * carrySpeed;
-
-        // Check if reached lift height
-        if (Vector3.Distance(transform.position, liftTarget) < 0.5f)
-        {
-            Debug.Log($"REached lift height : {Vector3.Distance(transform.position, liftTarget)}");
-            currentState = EagleState.Carrying;
-        }
-    }
-
-    private void HandleCarrying()
-    {
-        Debug.Log("Carrying the player away");
-        if (dropPoint == null)
-        {
-            Debug.LogWarning("No drop point set for eagle!");
-            DropPlayer();
-            return;
-        }
-
-        Vector2 horizontalDirection = new Vector2(dropPoint.position.x - transform.position.x, 0).normalized;
-
-        if(time < Duration)
-        {
-            time += Time.deltaTime;
-            time = time / Duration;
-        }
-
-        
-
-        rb.linearVelocity = new Vector2(horizontalDirection.x * carrySpeed , -1);
-
-        if (horizontalDirection.x > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, -30f); // Slight downward tilt when moving right
-        }
-        else if (horizontalDirection.x < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 30f);  // Slight downward tilt when moving left
-        }
-
-        // Custom flipping for horizontal carrying
-        if (horizontalDirection.x > 0 && !isFlipped)
-        {
-            ShouldFlip = true;
-            Flip();
-        }
-        else if (horizontalDirection.x < 0 && isFlipped)
-        {
-            ShouldFlip = true;
-            Flip();
-        }
-
-        // Check if reached drop point horizontally
-        float horizontalDistance = Mathf.Abs(dropPoint.position.x - transform.position.x);
-
-        if (horizontalDistance < 2f)
-        {
-            currentState = EagleState.Dropping;
-            Debug.Log("Reached drop point horizontally - dropping player");
-        }
-    }
-    
-
-    private void HandleDropping()
-    {
-        // Stop moving and drop player
-        rb.linearVelocity = Vector2.zero;
-        DropPlayer();
-
-        // Optional: Destroy eagle or make it fly away
-        Destroy(gameObject, 2f);
-    }
-
-    private void DropPlayer()
-    {
-        if (carriedPlayer != null)
-        {
-            carriedPlayer.ShouldFly = false;
-            carriedPlayer.rb.gravityScale = carriedPlayer.originalGravityScale; // You'll need this in PlayerMovement
-            carriedPlayer = null;
         }
     }
 
@@ -240,7 +127,6 @@ public class Eagle : BaseEnemy
             Flip();
         }
     }
-  
 
     protected override void Move() { }
     public override void Attack() { }
