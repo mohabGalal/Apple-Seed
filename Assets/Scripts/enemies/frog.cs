@@ -9,12 +9,16 @@ public class Frog : MonoBehaviour
 
     private float lastAttackTime;
     private Animator animator;
-    private bool playerInRange;   
+    private bool playerInRange;
+     private Vector2 direction;
+    private bool ShouldFlip = false;
+    private bool isFlipped = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -23,10 +27,11 @@ public class Frog : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         if (player == null) return;
+        direction = (player.transform.position - transform.position).normalized;
+        HandleFlipping();
 
         if (playerInRange && Time.time > lastAttackTime + attackCooldown)
         {
@@ -47,7 +52,7 @@ public class Frog : MonoBehaviour
         float distance = Vector2.Distance(transform.position, player.position);
         if (distance <= detectionRange)
         {
-            Debug.Log("Player got caught by frog!");
+            Debug.Log("fuck you ");
             player.GetComponent<PlayerMovement>().Die();
         }
     }
@@ -57,7 +62,7 @@ public class Frog : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            player = other.transform; 
+            player = other.transform;
         }
     }
 
@@ -67,6 +72,31 @@ public class Frog : MonoBehaviour
         {
             playerInRange = false;
             player = null;
+        }
+    }
+
+     private void HandleFlipping()
+    {
+        if (direction.x < 0 && !isFlipped)
+        {
+            ShouldFlip = true;
+            Flip();
+        }
+        else if (direction.x > 0 && isFlipped)
+        {
+            ShouldFlip = true;
+            Flip();
+        }
+    }
+    private void Flip()
+    {
+        if (ShouldFlip)
+        {
+            Vector3 scaler = transform.localScale;
+            scaler.x *= -1;
+            transform.localScale = scaler;
+            isFlipped = !isFlipped;
+            ShouldFlip = false;
         }
     }
 }
