@@ -6,13 +6,13 @@ public class MovingPlatform : MonoBehaviour
 {
     public Transform startPoint;
     public List<Transform> endPoints = new List<Transform>();
-    public float speed = 4f;
+    public float speed = 2.5f;
     public float pauseDuration = 1f;
 
     private Transform currentTarget;
-    private Vector2 startPosition;
-    private Vector2 targetPosition;
+    private Vector2 currentTargetPosition;
     private List<int> availableTargets;
+    private bool isMovingToStart = false;
     private bool isPaused = false;
 
     private const string playerTag = "Player";
@@ -33,18 +33,18 @@ public class MovingPlatform : MonoBehaviour
 
         InitializeAvailableTargets();
         SetNewRandomTarget();
-        startPosition = startPoint.position;
     }
 
     void Update()
     {
         if (isPaused) return;
 
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        Vector2 destination = isMovingToStart ? startPoint.position : currentTargetPosition;
+        transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, targetPosition) < 0.01f)
+        if (Vector2.Distance(transform.position, destination) < 0.01f)
         {
-            StartCoroutine(PauseAndReverse());
+            StartCoroutine(PauseAndDecideNextMove());
         }
     }
 
@@ -65,17 +65,16 @@ public class MovingPlatform : MonoBehaviour
     }
 
     [ContextMenu("Change Target")]
-    //Call this method to change the target point of the platform (In SeedLogic FindFirstObjectByType<MovingPlatform>().ChangeTarget();)
     public void ChangeTarget()
     {
         if (availableTargets.Count > 0)
         {
             SetNewRandomTarget();
-            isPaused = false;
+            isMovingToStart = false;
         }
         else
         {
-            Debug.Log("All end points have been used Platform will continue moving between the current points");
+            Debug.Log("All end points have been used. Platform will continue moving between the current points.");
         }
     }
 
@@ -96,19 +95,16 @@ public class MovingPlatform : MonoBehaviour
         int targetIndex = availableTargets[randomAvailableIndex];
 
         currentTarget = endPoints[targetIndex];
-        targetPosition = currentTarget.position;
-
+        currentTargetPosition = currentTarget.position;
         availableTargets.RemoveAt(randomAvailableIndex);
     }
 
-    IEnumerator PauseAndReverse()
+    IEnumerator PauseAndDecideNextMove()
     {
         isPaused = true;
         yield return new WaitForSeconds(pauseDuration);
 
-        Vector2 temp = startPosition;
-        startPosition = startPoint.position;
-        targetPosition = temp;
+        isMovingToStart = !isMovingToStart;
 
         isPaused = false;
     }
