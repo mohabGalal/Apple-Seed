@@ -1,55 +1,56 @@
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SeedLogic : MonoBehaviour
 {
-    public GameObject tree1;
-    public GameObject tree2;
-    public GameObject tree3;
-
+    [Header("Tree progression")]
+    public List<GameObject> trees;      
     public GameObject WinScreen;
 
-    public Image seed1;
-    public Image seed2;
-    //public Image seed3;
+    [Header("Platform")]
+    public MovingPlatform movingPlatform;
 
-
+    [Header("Seed Images (UI)")]
+    public List<Image> seedImages;      
 
     public static int seedsCollected = 0;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
+          
             GetComponent<Animator>().enabled = false;
             GetComponent<SpriteRenderer>().sprite = null;
-            PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
-            if (Player != null)
-            {
-                Player.SeedCollected();
-            }
-            ++seedsCollected;
 
-            Debug.Log($"seeds collected {seedsCollected}");
+           
+            MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
+            script.ChangeTarget();
+
             
-            if(seedsCollected == 1)
+            PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+            if (player != null)
             {
-                StartCoroutine(SetTreeActive());
-                Color c = seed1.color;
-                c.a = 1;
-                seed1.color = c;
-            }
-
-            if (seedsCollected == 2)
-            {
-                StartCoroutine(SetTreeActive());
-                Color c = seed2.color;
-                c.a = 1;
-                seed2.color = c;
-
+                player.SeedCollected();
             }
 
            
+            ++seedsCollected;
+            Debug.Log($"Seeds collected: {seedsCollected}");
+
+           
+            if (seedsCollected - 1 < seedImages.Count)
+            {
+                Color c = seedImages[seedsCollected - 1].color;
+                c.a = 1; 
+                seedImages[seedsCollected - 1].color = c;
+            }
+
+            
+            StartCoroutine(SetTreeActive());
+
         }
     }
 
@@ -58,31 +59,31 @@ public class SeedLogic : MonoBehaviour
         seedsCollected = 0;
     }
 
-
     IEnumerator SetTreeActive()
     {
-        Debug.Log("Seed 1 collected");
+        Debug.Log("Seed collected, changing tree...");
         yield return new WaitForSeconds(1);
-        Debug.Log("After 1 second");
-        if (seedsCollected == 1)
-        {
-            
-            tree1.SetActive(false);
-            tree2.SetActive(true);
-            tree3.SetActive(false);
 
+        
+        foreach (var tree in trees)
+        {
+            tree.SetActive(false);
         }
 
-        if (seedsCollected == 2)
+        
+        if (seedsCollected - 1 < trees.Count)
         {
-            tree1.SetActive(false);
-            tree2.SetActive(false);
-            tree3.SetActive(true);
+            trees[seedsCollected].SetActive(true);
+        }
+
+    
+        if (seedsCollected >= trees.Count)
+        {
             yield return new WaitForSeconds(0.5f);
             WinScreen.SetActive(true);
             SoundManager.Instance.PlayWinScreen();
         }
+
         Destroy(gameObject);
     }
-
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Frog : MonoBehaviour
+public class Frog : BaseEnemy
 {
     [Header("Player Detection")]
     public Transform player;
@@ -14,6 +14,7 @@ public class Frog : MonoBehaviour
     private bool ShouldFlip = false;
     private bool isFlipped = false;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -23,12 +24,29 @@ public class Frog : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerMovement>().Die();
+            PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
+            
+            if(player != null)
+            {
+                if (player.IsSpinning())
+                {
+                    player.Bounce();
+                }
+
+                else
+                    player.Die();
+            }
+        }
+
+        else if (collision.gameObject.CompareTag("Rock"))
+        {
+            base.Die();
         }
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (player == null) return;
         direction = (player.transform.position - transform.position).normalized;
         HandleFlipping();
@@ -39,7 +57,7 @@ public class Frog : MonoBehaviour
         }
     }
 
-    void Attack()
+    public override void Attack()
     {
         lastAttackTime = Time.time;
         animator.SetTrigger("Attack");
@@ -77,12 +95,12 @@ public class Frog : MonoBehaviour
 
      private void HandleFlipping()
     {
-        if (direction.x < 0 && !isFlipped)
+        if (direction.x > 0 && !isFlipped)
         {
             ShouldFlip = true;
             Flip();
         }
-        else if (direction.x > 0 && isFlipped)
+        else if (direction.x < 0 && isFlipped)
         {
             ShouldFlip = true;
             Flip();
@@ -99,4 +117,7 @@ public class Frog : MonoBehaviour
             ShouldFlip = false;
         }
     }
+
+    protected override void Move() { }
+    
 }
