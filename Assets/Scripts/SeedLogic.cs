@@ -7,11 +7,16 @@ using DG.Tweening;
 public class SeedLogic : MonoBehaviour
 {
     [Header("Tree progression")]
+<<<<<<< HEAD
     public List<GameObject> trees;
+=======
+    public List<GameObject> trees;      
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
     public GameObject WinScreen;
 
     [Header("Platform")]
     public MovingPlatform movingPlatform;
+<<<<<<< HEAD
 
     [Header("Seed Images (UI)")]
     public List<Image> seedImages;
@@ -20,6 +25,11 @@ public class SeedLogic : MonoBehaviour
     public float seedUIAnimationDuration = 0.8f;
     public float treeGrowDuration = 1.2f;
     public float seedCollectionEffectDuration = 0.5f;
+=======
+
+    [Header("Seed Images (UI)")]
+    public List<Image> seedImages;      
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
 
     public static int seedsCollected = 0;
 
@@ -27,7 +37,40 @@ public class SeedLogic : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
+<<<<<<< HEAD
             StartCoroutine(HandleSeedCollection(collision));
+=======
+          
+            GetComponent<Animator>().enabled = false;
+            GetComponent<SpriteRenderer>().sprite = null;
+
+           
+            MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
+            script.ChangeTarget();
+
+            
+            PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.SeedCollected();
+            }
+
+           
+            ++seedsCollected;
+            Debug.Log($"Seeds collected: {seedsCollected}");
+
+           
+            if (seedsCollected - 1 < seedImages.Count)
+            {
+                Color c = seedImages[seedsCollected - 1].color;
+                c.a = 1; 
+                seedImages[seedsCollected - 1].color = c;
+            }
+
+            
+            StartCoroutine(SetTreeActive());
+
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
         }
     }
 
@@ -188,8 +231,39 @@ public class SeedLogic : MonoBehaviour
         Debug.Log($"seeds reset {seedsCollected}");
     }
 
+<<<<<<< HEAD
     private void OnDestroy()
     {
         transform.DOKill();
     }
 }
+=======
+    IEnumerator SetTreeActive()
+    {
+        Debug.Log("Seed collected, changing tree...");
+        yield return new WaitForSeconds(1);
+
+        
+        foreach (var tree in trees)
+        {
+            tree.SetActive(false);
+        }
+
+        
+        if (seedsCollected - 1 < trees.Count)
+        {
+            trees[seedsCollected].SetActive(true);
+        }
+
+    
+        if (seedsCollected >= trees.Count)
+        {
+            yield return new WaitForSeconds(0.5f);
+            WinScreen.SetActive(true);
+            SoundManager.Instance.PlayWinScreen();
+        }
+
+        Destroy(gameObject);
+    }
+}
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c

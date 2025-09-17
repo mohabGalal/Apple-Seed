@@ -37,7 +37,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< HEAD
     filterMode: 0
+=======
+    filterMode: 1
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +79,11 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
+<<<<<<< HEAD
     textureCompression: 0
+=======
+    textureCompression: 1
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -134,8 +142,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
+<<<<<<< HEAD
     nameFileIdTable:
       pixel heart 2_0: 6577045001071185974
+=======
+    nameFileIdTable: {}
+>>>>>>> 42f757d60ec214489715faa24452a67a957a151c
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
