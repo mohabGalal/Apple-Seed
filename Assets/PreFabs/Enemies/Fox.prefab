@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 6170976036350760982}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.022098, y: 1.87, z: 0}
+  m_LocalPosition: {x: 13.022098, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -227,4 +227,7 @@ MonoBehaviour:
   ExplosionPreFab: {fileID: 3777233662976817124, guid: 6074f420ab3ca3c45b8105a2c96e25cd, type: 3}
   BulletPreFab: {fileID: 7796649463541286321, guid: 2bfef5ad065deeb45a3de1893dd07b3b, type: 3}
   BulletSpawner: {fileID: 3849061946632867360}
+  throwForce: 15
+  throwDistance: 10
+  destroyTime: 2
   attackCooldown: 3
