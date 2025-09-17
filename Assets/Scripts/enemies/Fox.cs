@@ -48,7 +48,16 @@ public class fox : BaseEnemy
             PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                player.Die();
+                if (player.IsSpinning())
+                {
+                    //Die();
+                    // Enemy dies
+                    //  Destroy(gameObject);
+                    player.Bounce();
+                }
+
+                else
+                    player.Die();
             }
         }
         if (collision.collider.CompareTag("Rock"))

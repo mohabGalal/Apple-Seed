@@ -126,6 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a67cf2de119a904b8b8505a7653a275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  speed: 2
+  DirectionX: 1
+  ExplosionPreFab: {fileID: 3777233662976817124, guid: 6074f420ab3ca3c45b8105a2c96e25cd, type: 3}
   player: {fileID: 0}
   detectionRange: 3
   attackCooldown: 2

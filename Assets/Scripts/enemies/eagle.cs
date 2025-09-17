@@ -41,9 +41,19 @@ public class Eagle : BaseEnemy
 
         if (collision.collider.CompareTag("Player") && currentState == EagleState.Hunting)
         {
-            Player.Die();
-            Destroy(gameObject, 1f);
-            return;
+            if (Player.IsSpinning())
+            {
+                //Die();
+                // Enemy dies
+                //  Destroy(gameObject);
+                Player.Bounce();
+            }
+            else
+            {
+                Player.Die();
+                Destroy(gameObject, 1f);
+                return;
+            }
         }
 
         if (collision.collider.CompareTag("Rock"))
