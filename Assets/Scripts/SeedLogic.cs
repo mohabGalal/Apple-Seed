@@ -27,6 +27,7 @@ public class SeedLogic : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
+            StopAllCoroutines();
             StartCoroutine(HandleSeedCollection(collision));
         }
     }
@@ -41,7 +42,7 @@ public class SeedLogic : MonoBehaviour
 
         ++seedsCollected;
 
-        if (seedsCollected % 2 == 0)
+        if (seedsCollected % 2 == 0 && movingPlatform != null )
         {
             MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
             script.ChangeTarget();

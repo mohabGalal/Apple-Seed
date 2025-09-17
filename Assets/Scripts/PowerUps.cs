@@ -98,8 +98,8 @@ public class PowerUps : MonoBehaviour
                 spawnedPositions.Add(newPos);
 
                 // pick a random prefab
-                int prefabIndex = prefabIndexes[indexCounter++];
-                Instantiate(powerUpPrefab[prefabIndex], newPos, Quaternion.identity);
+                indexCounter = Random.Range(0, powerUpPrefab.Count);
+                Instantiate(powerUpPrefab[indexCounter], newPos, Quaternion.identity);
             }
 
         }

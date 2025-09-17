@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3185572941330904328}
   - component: {fileID: 8179048222779831810}
   - component: {fileID: 2903544792884797743}
-  m_Layer: 0
-  m_Name: Rocks_0
-  m_TagString: Rock
+  m_Layer: 8
+  m_Name: RocksToRespawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

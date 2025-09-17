@@ -206,7 +206,7 @@ MonoBehaviour:
   health: 100
   speed: 1.2
   DirectionX: 8
-  ExplosionPreFab: {fileID: 0}
+  ExplosionPreFab: {fileID: 3777233662976817124, guid: 6074f420ab3ca3c45b8105a2c96e25cd, type: 3}
   swoopSpeed: 5
   carrySpeed: 6
   activationDistance: 20
