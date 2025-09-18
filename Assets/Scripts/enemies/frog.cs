@@ -10,9 +10,10 @@ public class Frog : BaseEnemy
     private float lastAttackTime;
     private Animator animator;
     private bool playerInRange;
-     private Vector2 direction;
+    private Vector2 direction;
     private bool ShouldFlip = false;
     private bool isFlipped = false;
+    public HealthManager healthManager;
 
 
     void Start()
@@ -25,8 +26,8 @@ public class Frog : BaseEnemy
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
-            
-            if(player != null)
+
+            if (player != null)
             {
                 if (player.IsSpinning())
                 {
@@ -34,7 +35,12 @@ public class Frog : BaseEnemy
                 }
 
                 else
-                    player.Die();
+                {
+
+                        player.Die();
+                    
+                    
+                }
             }
         }
 
@@ -47,6 +53,11 @@ public class Frog : BaseEnemy
     protected override void Update()
     {
         base.Update();
+        if (StopGame.Instance != null && StopGame.Instance.IsFrozen())
+        {
+            rb.linearVelocity = Vector2.zero;
+            return; // skip rest of logic
+        }
         if (player == null) return;
         direction = (player.transform.position - transform.position).normalized;
         HandleFlipping();
@@ -72,6 +83,7 @@ public class Frog : BaseEnemy
         {
             Debug.Log("fuck you ");
             player.GetComponent<PlayerMovement>().Die();
+
         }
     }
 
@@ -93,7 +105,7 @@ public class Frog : BaseEnemy
         }
     }
 
-     private void HandleFlipping()
+    private void HandleFlipping()
     {
         if (direction.x > 0 && !isFlipped)
         {
@@ -119,5 +131,5 @@ public class Frog : BaseEnemy
     }
 
     protected override void Move() { }
-    
+
 }

@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject tree1;
     public GameObject tree2;
     public GameObject tree3;
+    public HealthManager healthManager;
 
     public float originalGravityScale = 1f; // Store original gravity
 
@@ -81,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
         GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
         WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
        // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
+    }
+    private void OnDestroy()
+    {
+        Time.timeScale = 1;   
     }
 
     private void Start()
@@ -293,13 +299,32 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die()
     {
-        if (isDead) return;
+/*        if (isDead) return;
 
-        isDead = true;
-        currentDeath = DeathType.Normal;
-        anim.SetBool("isDead", true);
+        isDead = true;*/
+       // currentDeath = DeathType.Normal;
+            
+           // StopGame.Instance.FreezeAllEnemies();
+            healthManager.DecreaseHearts();
+            if(HealthManager.instance.HeartCount == 0)
+            {
+                anim.SetBool("isDead", true);
+                
+                StartCoroutine(stopAnimation());
 
-        StartCoroutine(HandleDeath());
+        }
+            // anim.SetBool("isDead", false);
+            
+        
+
+        //StartCoroutine(HandleDeath());
+    }
+
+    IEnumerator stopAnimation()
+    {
+        yield return new WaitForSeconds(0.2f);
+        FinalDeath();
+       // StopGame.Instance.UnfreezeAllEnemies();
     }
 
     public void FinalDeath()
@@ -312,11 +337,18 @@ public class PlayerMovement : MonoBehaviour
 
         rb.sharedMaterial = null;
         isDead = true;
-        currentDeath = DeathType.Final;
-        anim.SetBool("isDead", true);
+        //currentDeath = DeathType.Final;
         Debug.Log("Final death");
         SoundManager.Instance.PlayPlayerHit();
-        StartCoroutine(HandleDeath());
+        StartCoroutine(stopGame());
+        
+        // StartCoroutine(HandleDeath());
+    }
+
+    IEnumerator stopGame()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0;
     }
 
     private System.Collections.IEnumerator HandleDeath()
@@ -425,6 +457,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        
         SoundManager.Instance.PlayMainTheme();
         SoundManager.Instance.StopGameOver();
         SeedLogic.ResetSeedCount();
@@ -447,11 +480,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<PowerUpLogic>(out _))
         {
             power.Add(collision.gameObject);
         }
+        if (collision.CompareTag("HealthHeart"))
+        {
+            healthManager.RestoreHeats();
+            Destroy(collision.gameObject);
+        }
+     
+
     }
 }

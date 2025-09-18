@@ -12,6 +12,8 @@ TagManager:
   - tree
   - Ground
   - Eagle
+  - Snail
+  - HealthHeart
   layers:
   - Default
   - TransparentFX
@@ -27,9 +29,9 @@ TagManager:
   - enemy
   - Eagle
   - FriendEagle
-  - 
-  - 
-  - 
+  - Snail
+  - Frog
+  - Fox
   - 
   - 
   - 

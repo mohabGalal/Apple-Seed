@@ -12,6 +12,7 @@ public class fox : BaseEnemy
     public float destroyTime = 2f;
     private bool CanAttack = true;
     public float attackCooldown = 3f;
+    public HealthManager healthManager;
 
     override protected void Update()
     {
@@ -43,7 +44,7 @@ public class fox : BaseEnemy
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
             PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
             if (player != null)
@@ -55,16 +56,20 @@ public class fox : BaseEnemy
                     //  Destroy(gameObject);
                     player.Bounce();
                 }
-
                 else
-                    player.Die();
+                {
+                    if (healthManager.DecreaseHearts() == 0 )
+                    {
+                        player.Die();
+                    }
+                }
             }
-        }
-        if (collision.collider.CompareTag("Rock"))
-        {
-            base.Die();
-        }
+            if (collision.collider.CompareTag("Rock"))
+            {
+                base.Die();
+            }
 
+        }
     }
     private System.Collections.IEnumerator AttackCooldown()
     {
