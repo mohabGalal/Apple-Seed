@@ -3,25 +3,30 @@ using UnityEngine;
 
 public class Snail : BaseEnemy
 {
+    public HealthManager healthManager;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
             PlayerMovement Player = collision.collider.GetComponent<PlayerMovement>();
-           
-            if (Player != null) {
-                
+
+            if (Player != null)
+            {
+
                 if (Player.IsSpinning())
                 {
                     //Die();
-                   // Enemy dies
-                  //  Destroy(gameObject);
-                    Player.Bounce(); 
+                    // Enemy dies
+                    //  Destroy(gameObject);
+                    Player.Bounce();
                 }
                 else
                 {
-                    Player.Die(); 
+                    if (healthManager.DecreaseHearts() == 0)
+                    {
+                        Player.Die();
+                    }
                 }
 
             }
@@ -29,7 +34,7 @@ public class Snail : BaseEnemy
 
         if (collision.collider.CompareTag("StartPoint") || collision.collider.CompareTag("EndPoint"))
         {
-            DirectionX = - DirectionX;
+            DirectionX = -DirectionX;
             flip();
         }
 
@@ -39,7 +44,7 @@ public class Snail : BaseEnemy
         }
     }
 
-    
+
 
     override protected void Awake()
     {

@@ -14,12 +14,14 @@ public class HealthManager : MonoBehaviour
 
     private int MaxHearts = 6;
 
-    public void DecreaseHearts()
+    public int DecreaseHearts()
     {
         Color HeartColor = Hearts[HeartCount].color;
         HeartColor.a = 40;
         Hearts[HeartCount].color = HeartColor;
         --HeartCount;
+
+        return HeartCount;
     }
     
     public void RestoreHeats()
