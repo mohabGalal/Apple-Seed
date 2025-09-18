@@ -11,6 +11,9 @@ public class EnemyManager : MonoBehaviour
     [Header("Spawning Rules")]
     public int numberOfEnemies = 10;
     public float minDistance = 6f;   // Minimum distance between enemies
+    private float snailLength = 8f;
+
+    Vector3 newPos = Vector3.zero;
 
     private List<Vector3> spawnedPositions = new List<Vector3>();
 
@@ -62,7 +65,16 @@ public class EnemyManager : MonoBehaviour
             float randX = Random.Range(spawnStart.position.x, spawnEnd.position.x);
             float fixedY = spawnStart.position.y; // Use start’s Y so they’re aligned
 
-            Vector3 newPos = new Vector3(randX, fixedY, 0f);
+            newPos = new Vector3(randX, fixedY, 0f);
+            indexCounter = Random.Range(0, enemies.Count);
+
+            if (enemies[indexCounter].CompareTag("Snail"))
+            {
+                if(isOutOfBounds())
+                {
+
+                }
+            }
 
             bool isClose = false;
             foreach (var pos in spawnedPositions)
@@ -77,12 +89,21 @@ public class EnemyManager : MonoBehaviour
             if (!isClose)
             {
                 spawnedPositions.Add(newPos);
-                int prefabIndex = prefabIndexes[indexCounter++];
-
-                Instantiate(enemies[prefabIndex], new Vector2(newPos.x, newPos.y + enemies[prefabIndex].transform.position.y), Quaternion.identity);
+                
+                Instantiate(enemies[indexCounter], new Vector2(newPos.x, newPos.y + enemies[indexCounter].transform.position.y), Quaternion.identity);
             }
         }
 
         Debug.Log($"Spawned {spawnedPositions.Count} enemies successfully!");
+    }
+
+
+    bool isOutOfBounds()
+    {
+        if(Vector2.Distance(newPos , spawnEnd.position) < 4)
+        {
+            return true;
+        }
+        return false;
     }
 }
