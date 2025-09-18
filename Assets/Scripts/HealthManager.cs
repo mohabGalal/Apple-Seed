@@ -8,30 +8,47 @@ public class HealthManager : MonoBehaviour
     public static HealthManager instance {  get; private set; }
 
     public GameObject HealthUI;
-    public static int HeartCount = 5;
+    public int HeartCount =6;
 
     public List<Image> Hearts;
 
-    private int MaxHearts = 6;
+    private int MaxHearts = 5;
+
+    public Color Dcolor;
+    public Color Icolor;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public int DecreaseHearts()
     {
-        Color HeartColor = Hearts[HeartCount].color;
-        HeartColor.a = 40;
-        Hearts[HeartCount].color = HeartColor;
-        --HeartCount;
-
+        if (HeartCount > 0)
+        {
+            Hearts[HeartCount - 1].color = Dcolor;
+            HeartCount--;
+            Debug.Log($"HeartCount : {HeartCount}");
+            
+        }
         return HeartCount;
     }
     
     public void RestoreHeats()
     {
-        if(HeartCount < MaxHearts)
+        if((HeartCount-1) <= MaxHearts && HeartCount > 0)
         {
-            Color HeartColor = Hearts[HeartCount].color;
-            HeartColor.a = 100;
-            Hearts[HeartCount].color = HeartColor;
-            ++HeartCount;
+
+            Hearts[HeartCount].color = Icolor ;
+            HeartCount++;
             Debug.Log($"HeartCount : {HeartCount}");
         }
             

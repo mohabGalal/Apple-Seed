@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -294,13 +295,30 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die()
     {
-        if (isDead) return;
+/*        if (isDead) return;
 
-        isDead = true;
-        currentDeath = DeathType.Normal;
-        anim.SetBool("isDead", true);
+        isDead = true;*/
+       // currentDeath = DeathType.Normal;
+            anim.SetBool("isDead", true);
+            StopGame.Instance.FreezeAllEnemies();
+            healthManager.DecreaseHearts();
+            if(HealthManager.instance.HeartCount == 0)
+            {
+                FinalDeath();
 
-        StartCoroutine(HandleDeath());
+            }
+            // anim.SetBool("isDead", false);
+            StartCoroutine(stopAnimation());
+        
+
+        //StartCoroutine(HandleDeath());
+    }
+
+    IEnumerator stopAnimation()
+    {
+        yield return new WaitForSeconds(1);
+        anim.SetBool("isDead", false);
+        StopGame.Instance.UnfreezeAllEnemies();
     }
 
     public void FinalDeath()
@@ -313,11 +331,12 @@ public class PlayerMovement : MonoBehaviour
 
         rb.sharedMaterial = null;
         isDead = true;
-        currentDeath = DeathType.Final;
+        //currentDeath = DeathType.Final;
         anim.SetBool("isDead", true);
         Debug.Log("Final death");
         SoundManager.Instance.PlayPlayerHit();
-        StartCoroutine(HandleDeath());
+        GameOver();
+        // StartCoroutine(HandleDeath());
     }
 
     private System.Collections.IEnumerator HandleDeath()
