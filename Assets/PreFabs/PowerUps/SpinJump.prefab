@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -2909979916197687599}
   - component: {fileID: 2384952510666493098}
   m_Layer: 8
-  m_Name: Liquid
+  m_Name: SpinJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: -394114193
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7880082447445946865, guid: 25ff6eced55fed046b95c7a481da0b41, type: 3}
+  m_Sprite: {fileID: -3896723054220156259, guid: 25ff6eced55fed046b95c7a481da0b41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

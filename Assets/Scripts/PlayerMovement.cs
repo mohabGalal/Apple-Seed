@@ -84,6 +84,10 @@ public class PlayerMovement : MonoBehaviour
         WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
        // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
     }
+    private void OnDestroy()
+    {
+        Time.timeScale = 1;   
+    }
 
     private void Start()
     {
@@ -299,16 +303,18 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = true;*/
        // currentDeath = DeathType.Normal;
-            anim.SetBool("isDead", true);
-            StopGame.Instance.FreezeAllEnemies();
+            
+           // StopGame.Instance.FreezeAllEnemies();
             healthManager.DecreaseHearts();
             if(HealthManager.instance.HeartCount == 0)
             {
-                FinalDeath();
+                anim.SetBool("isDead", true);
+                
+                StartCoroutine(stopAnimation());
 
-            }
+        }
             // anim.SetBool("isDead", false);
-            StartCoroutine(stopAnimation());
+            
         
 
         //StartCoroutine(HandleDeath());
@@ -316,9 +322,9 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator stopAnimation()
     {
-        yield return new WaitForSeconds(1);
-        anim.SetBool("isDead", false);
-        StopGame.Instance.UnfreezeAllEnemies();
+        yield return new WaitForSeconds(0.2f);
+        FinalDeath();
+       // StopGame.Instance.UnfreezeAllEnemies();
     }
 
     public void FinalDeath()
@@ -332,11 +338,17 @@ public class PlayerMovement : MonoBehaviour
         rb.sharedMaterial = null;
         isDead = true;
         //currentDeath = DeathType.Final;
-        anim.SetBool("isDead", true);
         Debug.Log("Final death");
         SoundManager.Instance.PlayPlayerHit();
-        GameOver();
+        StartCoroutine(stopGame());
+        
         // StartCoroutine(HandleDeath());
+    }
+
+    IEnumerator stopGame()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0;
     }
 
     private System.Collections.IEnumerator HandleDeath()
@@ -445,6 +457,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        
         SoundManager.Instance.PlayMainTheme();
         SoundManager.Instance.StopGameOver();
         SeedLogic.ResetSeedCount();
