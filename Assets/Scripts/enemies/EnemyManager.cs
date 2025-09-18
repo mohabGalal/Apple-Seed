@@ -55,7 +55,7 @@ public class EnemyManager : MonoBehaviour
 
         // Spawn enemies
         int attempts = 0;
-        int maxAttempts = numberOfEnemies * 10;
+        int maxAttempts = numberOfEnemies * 100;
         int indexCounter = 0;
 
         while (spawnedPositions.Count < numberOfEnemies && attempts < maxAttempts)
@@ -68,11 +68,11 @@ public class EnemyManager : MonoBehaviour
             newPos = new Vector3(randX, fixedY, 0f);
             indexCounter = Random.Range(0, enemies.Count);
 
-            if (enemies[indexCounter].CompareTag("Snail"))
+           if (enemies[indexCounter].CompareTag("Snail"))
             {
                 if(isOutOfBounds())
                 {
-
+                    continue;
                 }
             }
 
@@ -100,7 +100,7 @@ public class EnemyManager : MonoBehaviour
 
     bool isOutOfBounds()
     {
-        if(Vector2.Distance(newPos , spawnEnd.position) < 4)
+        if(Vector3.Distance(newPos , spawnEnd.position) < 6)
         {
             return true;
         }
