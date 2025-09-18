@@ -51,7 +51,7 @@ public class Eagle : BaseEnemy
             }
             else
             {
-                if (healthManager.DecreaseHearts() == 0)
+                if (HealthManager.instance.HeartCount == 0)
                 {
                     Player.Die();
                     Destroy(gameObject, 1f);

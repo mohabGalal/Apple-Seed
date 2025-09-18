@@ -36,10 +36,10 @@ public class Frog : BaseEnemy
 
                 else
                 {
-                    if (healthManager.DecreaseHearts() == 0)
-                    {
+
                         player.Die();
-                    }
+                    
+                    
                 }
             }
         }
@@ -53,6 +53,11 @@ public class Frog : BaseEnemy
     protected override void Update()
     {
         base.Update();
+        if (StopGame.Instance != null && StopGame.Instance.IsFrozen())
+        {
+            rb.linearVelocity = Vector2.zero;
+            return; // skip rest of logic
+        }
         if (player == null) return;
         direction = (player.transform.position - transform.position).normalized;
         HandleFlipping();
@@ -78,6 +83,7 @@ public class Frog : BaseEnemy
         {
             Debug.Log("fuck you ");
             player.GetComponent<PlayerMovement>().Die();
+
         }
     }
 
