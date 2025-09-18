@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject tree1;
     public GameObject tree2;
     public GameObject tree3;
+    public HealthManager healthManager;
 
     public float originalGravityScale = 1f; // Store original gravity
 
@@ -447,11 +448,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<PowerUpLogic>(out _))
         {
             power.Add(collision.gameObject);
         }
+        if (collision.CompareTag("HealthHeart"))
+        {
+            healthManager.RestoreHeats();
+            Destroy(collision.gameObject);
+        }
+     
+
     }
 }

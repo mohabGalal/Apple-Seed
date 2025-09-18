@@ -28,6 +28,7 @@ public class Eagle : BaseEnemy
     private EagleState currentState = EagleState.Hunting;
     private Vector3 liftTarget;
     private Vector3 startCarryPosition;
+    public HealthManager healthManager;
 
     override protected void Awake()
     {
@@ -50,9 +51,12 @@ public class Eagle : BaseEnemy
             }
             else
             {
-                Player.Die();
-                Destroy(gameObject, 1f);
-                return;
+                if (healthManager.DecreaseHearts() == 0)
+                {
+                    Player.Die();
+                    Destroy(gameObject, 1f);
+                    return;
+                }
             }
         }
 
@@ -103,7 +107,7 @@ public class Eagle : BaseEnemy
 
     private void HandleHunting()
     {
-        
+
         if (!isActivelyHunting)
         {
             if (!ShouldBeActive())
