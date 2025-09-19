@@ -28,6 +28,8 @@ public class SeedLogic : MonoBehaviour
     private bool isTutorialScene;
     PlayerMovement player;
 
+    public GameObject DefaultTree;
+
 
     private void Awake()
     {
@@ -54,7 +56,10 @@ public class SeedLogic : MonoBehaviour
 
         ++seedsCollected;
 
-        
+        if(DefaultTree)
+            DefaultTree.SetActive(false);
+
+
         if (seedsCollected % 2 == 0 && movingPlatform != null)
         {
             MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
