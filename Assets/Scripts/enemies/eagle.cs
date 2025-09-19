@@ -51,12 +51,11 @@ public class Eagle : BaseEnemy
             }
             else
             {
-                if (HealthManager.instance.HeartCount == 0)
-                {
+               
                     Player.Die();
                     Destroy(gameObject, 1f);
                     return;
-                }
+                
             }
         }
 

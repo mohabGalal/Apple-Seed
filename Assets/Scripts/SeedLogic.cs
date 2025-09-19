@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class SeedLogic : MonoBehaviour
 {
     [Header("Tree progression")]
     public List<GameObject> trees;
+
     public GameObject WinScreen;
 
     [Header("Platform")]
@@ -23,12 +25,22 @@ public class SeedLogic : MonoBehaviour
 
     public static int seedsCollected = 0;
 
+    private bool isTutorialScene;
+    PlayerMovement player;
+
+
+    private void Awake()
+    {
+        isTutorialScene = SceneManager.GetActiveScene().name == "TutorialScene";
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
+            player = collision.collider.GetComponent<PlayerMovement>();
             StopAllCoroutines();
             StartCoroutine(HandleSeedCollection(collision));
+            Debug.Log("seed collides with player", collision.gameObject);
         }
     }
 
@@ -42,15 +54,17 @@ public class SeedLogic : MonoBehaviour
 
         ++seedsCollected;
 
-        if (seedsCollected % 2 == 0 && movingPlatform != null )
+        
+        if (seedsCollected % 2 == 0 && movingPlatform != null)
         {
             MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
             script.ChangeTarget();
         }
 
-        PlayerMovement player = collision.collider.GetComponent<PlayerMovement>();
+        
         if (player != null)
         {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             player.SeedCollected();
         }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828963527687724917}
   - component: {fileID: 7253716275578784433}
-  m_Layer: 14
+  m_Layer: 9
   m_Name: StartPoint
   m_TagString: StartPoint
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -224,6 +224,7 @@ MonoBehaviour:
   speed: 2
   DirectionX: 1
   ExplosionPreFab: {fileID: 0}
+  healthManager: {fileID: 0}
 --- !u!1 &5826153089079747908
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8556095736986604953}
   - component: {fileID: 2213424527769973238}
-  m_Layer: 14
+  m_Layer: 10
   m_Name: EndPoint
   m_TagString: EndPoint
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
