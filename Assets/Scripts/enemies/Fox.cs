@@ -58,10 +58,9 @@ public class fox : BaseEnemy
                 }
                 else
                 {
-                    if (healthManager.DecreaseHearts() == 0 )
-                    {
+               
                         player.Die();
-                    }
+                    
                 }
             }
             if (collision.collider.CompareTag("Rock"))

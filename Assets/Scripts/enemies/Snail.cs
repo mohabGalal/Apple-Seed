@@ -23,10 +23,9 @@ public class Snail : BaseEnemy
                 }
                 else
                 {
-                    if (healthManager.DecreaseHearts() == 0)
-                    {
+               
                         Player.Die();
-                    }
+                   
                 }
 
             }

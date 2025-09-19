@@ -165,8 +165,9 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
                 Jump();
             else
+            { 
                 DoubleJump();
-
+                }
 
             anim.SetTrigger("isJumping");
         }
@@ -299,13 +300,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die()
     {
-/*        if (isDead) return;
+        /*        if (isDead) return;
 
-        isDead = true;*/
-       // currentDeath = DeathType.Normal;
-            
-           // StopGame.Instance.FreezeAllEnemies();
-            healthManager.DecreaseHearts();
+                isDead = true;*/
+        // currentDeath = DeathType.Normal;
+
+        // StopGame.Instance.FreezeAllEnemies();
+        HealthManager.instance.DecreaseHearts();
             if(HealthManager.instance.HeartCount == 0)
             {
                 anim.SetBool("isDead", true);
@@ -453,6 +454,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(PlayerSpawnPoint.position.x, PlayerSpawnPoint.position.y);
         handlePowerUps("Reset");
         ResetPowerUps();
+        Debug.Log("inside seedCollected() in player");
     }
 
     public void ReloadCurrentScene()

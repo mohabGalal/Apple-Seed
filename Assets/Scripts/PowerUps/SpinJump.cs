@@ -12,9 +12,11 @@ public class SpinJump : MonoBehaviour
 
             if (itemsCollected == 1)
             {
-                SpinScreen.SetActive(true);
-                Destroy(SpinScreen, 5f);
-
+                if (SpinScreen)
+                {
+                    SpinScreen.SetActive(true);
+                    Destroy(SpinScreen, 5f);
+                }
             }
 
             PlayerMovement Player = collision.GetComponent<PlayerMovement>();
@@ -27,6 +29,10 @@ public class SpinJump : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        itemsCollected = 0;
+    }
     private System.Collections.IEnumerator HandleScreen()
     {
         SpinScreen.SetActive(true);

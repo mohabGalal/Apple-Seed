@@ -16,8 +16,12 @@ public class ThrowRock : MonoBehaviour
             starCollected++;
             if(starCollected == 1)
             {
-                ThrowScreen.SetActive(true);
-                Destroy(ThrowScreen, 5f);
+                if (ThrowScreen)
+                {
+                    ThrowScreen.SetActive(true);
+                    Destroy(ThrowScreen, 5f);
+                }
+
 
             }
 
@@ -29,5 +33,10 @@ public class ThrowRock : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        starCollected = 0;
     }
 }

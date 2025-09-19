@@ -17,8 +17,11 @@ public class DoubleJump : MonoBehaviour
                 heartValue++;
                 if (heartValue == 1)
                 {
-                    DoubleScreen.SetActive(true);
-                    Destroy(DoubleScreen, 5f);
+                    if (DoubleScreen)
+                    {
+                        DoubleScreen.SetActive(true);
+                        Destroy(DoubleScreen, 5f);
+                    }
                 }
                 //player.AddHeart(heartValue); 
                 player.doubleJumpUnlocked = true;
@@ -28,5 +31,10 @@ public class DoubleJump : MonoBehaviour
 
             //Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        heartValue = 0;
     }
 }
