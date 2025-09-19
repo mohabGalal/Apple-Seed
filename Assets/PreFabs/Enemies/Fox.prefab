@@ -231,3 +231,4 @@ MonoBehaviour:
   throwDistance: 10
   destroyTime: 2
   attackCooldown: 3
+  healthManager: {fileID: 0}
