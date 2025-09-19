@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     CurrentPowerUp script;
 
     public GameObject MainMenu;
+   
 
     public GameObject seedLogic;
     SeedLogic seedScript;
