@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<PowerUpLogic>(out _))
+        if (collision.TryGetComponent<PowerUpLogic>(out _) && !collision.TryGetComponent<Key>(out _))
         {
             power.Add(collision.gameObject);
         }

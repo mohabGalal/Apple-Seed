@@ -63,11 +63,12 @@ public class fox : BaseEnemy
                     
                 }
             }
-            if (collision.collider.CompareTag("Rock"))
-            {
-                base.Die();
-            }
 
+        }
+        else if (collision.gameObject.CompareTag("Rock"))
+        {
+
+            base.Die();
         }
     }
     private System.Collections.IEnumerator AttackCooldown()

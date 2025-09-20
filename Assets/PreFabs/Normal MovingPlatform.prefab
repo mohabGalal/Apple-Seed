@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4584153872970683872}
   - component: {fileID: 874129250793383735}
   - component: {fileID: 6304169602437836480}
-  - component: {fileID: 4431982285456879664}
   - component: {fileID: 2265652826331820925}
   m_Layer: 6
   m_Name: Normal MovingPlatform
@@ -77,9 +76,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 639849493
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -8620202154233844528, guid: c2d68157b3edb094dbc6b7582325298a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -132,46 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 594397485461546748}
   pointB: {fileID: 4753139546284236863}
-  speed: 2
+  speed: 10
   cooldownTime: 2
---- !u!1839735485 &4431982285456879664
-Tilemap:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2627463269528090843}
-  m_Enabled: 1
-  m_Tiles: {}
-  m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
-  m_TileObjectToInstantiateArray: []
-  m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 0
-  m_TileOrientationMatrix:
-    e00: 1
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 1
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 1
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 1
 --- !u!61 &2265652826331820925
 BoxCollider2D:
   m_ObjectHideFlags: 0

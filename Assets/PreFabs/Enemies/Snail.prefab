@@ -194,9 +194,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -394114193
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -6207193392188836992, guid: 5e04c59f0aedd714d98687cb28412eeb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -223,7 +223,7 @@ MonoBehaviour:
   health: 100
   speed: 2
   DirectionX: 1
-  ExplosionPreFab: {fileID: 0}
+  ExplosionPreFab: {fileID: 3777233662976817124, guid: 6074f420ab3ca3c45b8105a2c96e25cd, type: 3}
   healthManager: {fileID: 0}
 --- !u!1 &5826153089079747908
 GameObject:
@@ -396,6 +396,18 @@ PrefabInstance:
     - target: {fileID: 8485708603454514104, guid: 00a554a86acb67742b58a5d2b58959ee, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485708603454514104, guid: 00a554a86acb67742b58a5d2b58959ee, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485708603454514104, guid: 00a554a86acb67742b58a5d2b58959ee, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485708603454514104, guid: 00a554a86acb67742b58a5d2b58959ee, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1913786858625285818, guid: 00a554a86acb67742b58a5d2b58959ee, type: 3}
