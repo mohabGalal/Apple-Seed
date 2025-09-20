@@ -78,9 +78,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -394114193
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 232619167, guid: e41e956f91461de4d8f1b3ad558b1527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRange: 3
   attackCooldown: 2
+  healthManager: {fileID: 0}
 --- !u!50 &496457264269044693
 Rigidbody2D:
   serializedVersion: 5
@@ -141,7 +142,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3274237714166707576}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -159,7 +160,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!61 &2298491287050648162
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.15889068, y: -0.02956206}
+  m_Offset: {x: 0.15889068, y: -0.025990061}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -204,7 +205,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.32221863, y: 0.26087588}
+  m_Size: {x: 0.32221863, y: 0.22753729}
   m_EdgeRadius: 0
 --- !u!1 &5992865694187045803
 GameObject:
@@ -272,7 +273,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.03444138, y: -0.02970332}
+  m_Offset: {x: -0.068377525, y: -0.030974478}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -282,5 +283,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0688827, y: 0.26071924}
+  m_Size: {x: 1.136755, y: 0.17220718}
   m_EdgeRadius: 0

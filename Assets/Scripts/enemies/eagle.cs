@@ -69,7 +69,7 @@ public class Eagle : BaseEnemy
     {
         if (mainCamera == null) return false;
         float distanceFromCamera = Mathf.Abs(transform.position.x - mainCamera.transform.position.x);
-        return distanceFromCamera < activationDistance;
+        return distanceFromCamera < activationDistance && player.transform.position.y<transform.position.y;
     }
 
     override protected void Update()
