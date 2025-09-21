@@ -58,6 +58,8 @@ public class SeedLogic : MonoBehaviour
 
         ++seedsCollected;
 
+        Debug.Log($"Seed count {seedsCollected}, in scene : {SceneManager.GetActiveScene().name}");
+
         if(DefaultTree)
             DefaultTree.SetActive(false);
 

@@ -96,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         SetTimeScale(1f);
+        SeedLogic.ResetSeedCount();
     }
 
     private void Start()
@@ -155,7 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        SetTimeScale(1f);
         SceneManager.LoadScene("MainMenu");
+       
     }
 
     public void SetTimeScale(float timeScale)
