@@ -84610,7 +84610,7 @@ PrefabInstance:
       objectReference: {fileID: 1951090884}
     - target: {fileID: 8788973175310855137, guid: 74bf71585636f1d408828a455490e3f1, type: 3}
       propertyPath: pauseDuration
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8788973175310855137, guid: 74bf71585636f1d408828a455490e3f1, type: 3}
       propertyPath: 'endPoints.Array.data[0]'
