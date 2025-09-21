@@ -39,7 +39,7 @@ public class PowerUps : MonoBehaviour
 
    
 
-    private void SpawnPowerUps()
+    public void SpawnPowerUps()
     {
         // build  prefab index  list
 
