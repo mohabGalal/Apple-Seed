@@ -78,13 +78,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+
         rb = GetComponent<Rigidbody2D>();
         defaultGravityScale = rb.gravityScale;
         GameOverScreen.SetActive(false);
         GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
-        WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
+        // WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
         // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
-        SetTimeScale(0);
+        
+        if(SceneManager.GetActiveScene().name == "MainLevel")
+        {
+            SetTimeScale(0);
+        }
        
     }
     private void OnDestroy()
