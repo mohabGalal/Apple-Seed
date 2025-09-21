@@ -12,8 +12,10 @@ public class MovingPlatform : MonoBehaviour
     private Transform currentTarget;
     private Vector2 currentTargetPosition;
     private List<int> availableTargets;
-    private bool isMovingToStart = false;
+    public bool isMovingToStart = true;
     private bool isPaused = false;
+
+    public bool isPlayerOn = false;
 
     private const string playerTag = "Player";
 
@@ -37,7 +39,7 @@ public class MovingPlatform : MonoBehaviour
 
     void Update()
     {
-        if (isPaused) return;
+        if (isPaused || !isPlayerOn) return;
 
         Vector2 destination = isMovingToStart ? startPoint.position : currentTargetPosition;
         transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
@@ -45,6 +47,7 @@ public class MovingPlatform : MonoBehaviour
         if (Vector2.Distance(transform.position, destination) < 0.01f)
         {
             StartCoroutine(PauseAndDecideNextMove());
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAaaa");
         }
     }
 
@@ -53,6 +56,7 @@ public class MovingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag(playerTag))
         {
             collision.gameObject.transform.SetParent(transform);
+            isPlayerOn = true;
         }
     }
 

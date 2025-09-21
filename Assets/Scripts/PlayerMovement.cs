@@ -83,11 +83,14 @@ public class PlayerMovement : MonoBehaviour
         GameOverScreen.SetActive(false);
         GameOverScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
         WinScreen.GetComponentInChildren<Button>().onClick.AddListener(ReloadCurrentScene);
-       // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
+        // MainMenu.GetComponentInChildren<Button>().onClick.AddListener(StartGame);
+        SetTimeScale(0);
+       
     }
     private void OnDestroy()
     {
-        Time.timeScale = 1;   
+        
+        SetTimeScale(1f);
     }
 
     private void Start()
@@ -145,7 +148,15 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log($"can throw : {CanThrowRock}");
     }
 
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
+    public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
     private void AnimationController()
     {
         anim.SetBool("isMoving", isMoving);

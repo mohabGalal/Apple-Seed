@@ -356,6 +356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35efa8aa98b99c44aef271c222071af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TutorialButton: {fileID: 1844332263}
+  PlayButton: {fileID: 2088260312}
 --- !u!1 &713603768
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35efa8aa98b99c44aef271c222071af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TutorialButton: {fileID: 0}
+  PlayButton: {fileID: 0}
 --- !u!1 &902746942
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +889,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 123627103}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -927,6 +931,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844332261}
   m_CullTransparentMesh: 1
+--- !u!114 &2088260312 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3985800313638631028, guid: fbabc40deb39d0841b0df6786d599a45, type: 3}
+  m_PrefabInstance: {fileID: 933721815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
