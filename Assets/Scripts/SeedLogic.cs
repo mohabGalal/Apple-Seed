@@ -30,6 +30,8 @@ public class SeedLogic : MonoBehaviour
 
     public GameObject DefaultTree;
 
+    public MP_Trigger MP_trigger;
+
 
     private void Awake()
     {
@@ -64,6 +66,10 @@ public class SeedLogic : MonoBehaviour
         {
             MovingPlatform script = movingPlatform.GetComponent<MovingPlatform>();
             script.ChangeTarget();
+           /* script.transform.position = script.startPoint.position;
+            script.isPlayerOn = false;*/
+            
+            
         }
 
         
@@ -153,7 +159,8 @@ public class SeedLogic : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(ShowWinScreenWithAnimation());
-            SoundManager.Instance.PlayWinScreen();
+            //SoundManager.Instance.PlayWinScreen();
+            SoundManager.Instance.MainTheme.Stop();
         }
     }
 

@@ -6,8 +6,9 @@ public class SoundManager : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
-    [SerializeField] private AudioSource MainTheme;// Drag an AudioSource for SFX
+    [SerializeField] public AudioSource MainTheme;// Drag an AudioSource for SFX
     [SerializeField] private AudioSource GameOverSource;
+    [SerializeField] private AudioSource PowerUps;
 
     [Header("Player SFX Clips")]
     public AudioClip jumpClip;
@@ -54,7 +55,7 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayJump() => PlaySFX(jumpClip);
     public void PlaySpinJump() => PlaySFX(SpinJump);
-    public void PlayPowerUp() => PlaySFX(PowerUp);
+    public void PlayPowerUp() => PowerUps.Play();
     public void PlayPickItem() => PlaySFX(PickItem);
     public void PlayWinScreen() => PlaySFX(WinScreen);
     public void PlayGameOver() => GameOverSource.Play();
