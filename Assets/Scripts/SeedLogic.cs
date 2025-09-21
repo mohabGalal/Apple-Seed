@@ -160,7 +160,11 @@ public class SeedLogic : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(ShowWinScreenWithAnimation());
             //SoundManager.Instance.PlayWinScreen();
-            SoundManager.Instance.MainTheme.Stop();
+            if(SceneManager.GetActiveScene().name == "MainLevel")
+            {
+                SoundManager.Instance.MainTheme.Stop();
+            }
+
         }
     }
 

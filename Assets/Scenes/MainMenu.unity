@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TutorialButton: {fileID: 1844332263}
   PlayButton: {fileID: 2088260312}
+  Play2: {fileID: 0}
 --- !u!1 &713603768
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TutorialButton: {fileID: 0}
   PlayButton: {fileID: 0}
+  Play2: {fileID: 0}
 --- !u!1 &902746942
 GameObject:
   m_ObjectHideFlags: 0
