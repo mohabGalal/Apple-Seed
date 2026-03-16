@@ -34,7 +34,7 @@ There are four enemy types (eagle, fox, frog, snail) and the platforms rearrange
 
 ## How to run locally
 
-1. Install Unity 6 (version 6000.0.46f1)
+1. Install Unity 6 
 2. Clone this repo
 3. Open the project folder in Unity
 4. Open `Assets/Scenes/MainMenu` and hit play
