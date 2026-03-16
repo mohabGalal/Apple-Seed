@@ -14,7 +14,7 @@ Along the way you'll find power-ups:
 - **Double Jump** - jump again in mid-air
 - **Spin Jump** - hold space to slow-fall and bounce off enemies
 - **Rock Throw** - press T to throw rocks at enemies
-- **Key** - opens locked stuff
+- **Key** - unlocks a friendly eagle that carries you to another spot
 
 There are four enemy types (eagle, fox, frog, snail) and the platforms rearrange randomly each time you play, so it's a bit different every run.
 
